@@ -1,0 +1,189 @@
+html {
+  font-size: 62.5%; /*reason: default fontsize = 16px; 16px(.625)=10px, this is a convenient 1rem value*/
+  box-sizing: border-box; /* easier to manage the box model, content, padding, border, and margin*/
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  font-size: 1.6rem;
+  font-family: Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  height: 100%;
+}
+
+/*LAYOUT*/
+.grid-container {
+  display: grid;
+  grid-template-areas:
+    "header"
+    "main"
+    "footer";
+  grid-template-columns: 1fr;
+  grid-template-rows: 5rem 1fr 5rem;
+  height: 100%;
+}
+header {
+  grid-area: header;
+  background-color: #203040;
+}
+main {
+  grid-area: main;
+  padding: 1rem;
+}
+footer {
+  grid-area: footer;
+  background-color: #203040;
+  color: #ffffff;
+}
+
+/*COMMON CLASSES*/
+h1 {
+  font-size: 1.8rem;
+  padding: 1rem 0;
+}
+h2 {
+  font-size: 1.6rem;
+  padding: 1rem 0;
+}
+a {
+  text-decoration: none;
+}
+a:hover {
+  color: #ff8000;
+}
+ul {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
+li {
+  margin-top: 1rem;
+}
+
+input,
+select,
+textarea,
+button {
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: 0.2rem solid #a4a4a4;
+  font-size: 1.6rem;
+  font-family: Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+button {
+  background-color: #f8f8f8;
+  cursor: pointer;
+}
+input:hover,
+select:hover,
+textarea:hover,
+button:hover {
+  border: 0.2rem solid #404040;
+}
+button.primary {
+  background-color: #f0c040;
+}
+button.block {
+  width: 100%;
+}
+
+/*HEADER*/
+header a {
+  color: #ffffff;
+  padding: 1rem;
+}
+a.brand {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between; /*maximum distance between*/
+  align-items: center; /*vertically center... because flex in row*/
+}
+.row.center {
+  justify-content: center;
+}
+.row.top {
+  align-items: flex-start;
+}
+.col-1 {
+  flex: 1 1 25rem;
+}
+.col-2 {
+  flex: 2 1 50rem;
+}
+
+/*IMAGE*/
+img {
+  border-radius: 0.5rem;
+}
+img.medium {
+  max-width: 29rem;
+  width: 100%;
+}
+img.large {
+  width: 100%;
+}
+
+/*CARD*/
+.card {
+  border: 0.13rem solid #c0c0c0;
+  background-color: #f8f8f8;
+  border-radius: 0.5rem;
+  margin: 1rem;
+}
+.card-body {
+  padding: 1rem;
+}
+.card-body > * {
+  margin-bottom: 0.5rem;
+}
+.price {
+  font-size: 2rem;
+}
+
+/*RATING*/
+.rating {
+  color: #f0c040;
+  margin: 0.1rem;
+}
+.rating span:last-child {
+  color: #404040;
+  margin-left: 0.5rem;
+}
+
+/*ALERT*/
+.success {
+  color: #20a020;
+  font-weight: bold;
+}
+.danger {
+  color: #a02020;
+  font-weight: bold;
+}
+
+.alert {
+  padding: 1rem;
+  border: 0.1rem solid transparent;
+  border-radius: 0.5rem;
+}
+.alert-info {
+  /*default alert clas*/
+  color: #2020a0;
+  background: #e0e0ff;
+}
+.alert-danger {
+  color: #a02020;
+  background-color: #ffe0e0;
+}
