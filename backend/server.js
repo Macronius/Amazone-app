@@ -1,4 +1,4 @@
-import express from 'express';
+import express from 'express';  //a Node js web application server framework, which is specifically design for building single/multi-page and hybrid web applications, standard server framework for node.js, the backend part of MERN stack
 import data from './data.js';   //IMPORTANT: append extension for files on serverside
 
 //create an app from express

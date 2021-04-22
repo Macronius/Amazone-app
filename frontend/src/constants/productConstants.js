@@ -7,5 +7,7 @@ export const PRODUCT_DETAILS_SUCCESS = 'PRODUCT_DETAILS_SUCCESS';
 export const PRODUCT_DETAILS_FAIL = 'PRODUCT_DETAILS_FAIL';
 
 
+
+
 //QUESTION:
 //what exactly is this particular page for?

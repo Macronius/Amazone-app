@@ -104,6 +104,15 @@ a.brand {
   font-weight: bold;
   color: #ffffff;
 }
+.badge{
+  background-color: #f02020;
+  color: #ffffff;
+  border-radius: 50%;
+  padding: .4rem .8rem;
+  /* border: 1px solid orange; */
+  font-size: 1.4rem;
+  margin-left: 0.2rem;
+}
 
 .row {
   display: flex;
