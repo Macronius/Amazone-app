@@ -123,3 +123,8 @@ style elments
     3. show item image, name, qty and price
     4. Proceed to Checkout button
     5. Implement remove from cart action
+
+17. Implement Remove From Cart
+    1. create removeFromCart constants('CART_REMOVE_ITEM'), actions(CART_REMOVE_ITEM)(update cart item&local storage and remove selected item) and reducers
+    2. add reducer to store.js
+    3. use action in CartScreen.js

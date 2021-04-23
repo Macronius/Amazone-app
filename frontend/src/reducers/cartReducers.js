@@ -1,4 +1,4 @@
-import { CART_ADD_ITEM } from "../constants/cartConstants";
+import { CART_ADD_ITEM, CART_REMOVE_ITEM } from "../constants/cartConstants";
 
 export const cartReducer = (state = { cartItems: [] }, action) => {
   //why say cartItems: [] here, what if next time the array is not empty?
@@ -16,6 +16,10 @@ export const cartReducer = (state = { cartItems: [] }, action) => {
       } else {
         return { ...state, cartItems: [...state.cartItems, item] }; //notice, the array with everything already there, then adds one more item
       }
+
+    case CART_REMOVE_ITEM:
+      //remove item = action.payload, which contains productId, will be filtered out
+      return {...state, cartItems: state.cartItems.filter( (x)=> x.product !== action.payload )};//REMEMBER, removing an item is actually returning everything except that item
     default:
       return state;
   }

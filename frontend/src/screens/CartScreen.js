@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart } from "../actions/cartActions";
+import { addToCart, removeFromCart } from "../actions/cartActions";
 import { Link } from "react-router-dom";
 import MessageBox from "../components/MessageBox";
 
@@ -28,6 +28,7 @@ export default function CartScreen(props) {
   //define removeFromCartHandler function
   const removeFromCartHandler = (id) => {
     //delete action
+    dispatch(removeFromCart(id));
   };
 
   //define checkoutHandler function, to redirect user to sign-in screen
@@ -52,7 +53,7 @@ export default function CartScreen(props) {
                     <img src={item.image} alt={item.name} className="small" />
                   </div>
                   <div className="min-30">
-                    <Link to={"/product/${item.product}"}>{item.name}</Link>
+                    <Link to={`/product/${item.product}`}>{item.name}</Link>
                   </div>
                   <div>
                     <select
@@ -104,7 +105,7 @@ export default function CartScreen(props) {
                 type="button"
                 onClick={checkoutHandler}
                 className="primary block"
-                disable={cartItems.length === 0}
+                disabled={cartItems.length === 0}
               >
                 Proceed to Checkout
               </button>
