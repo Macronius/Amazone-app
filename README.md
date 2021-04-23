@@ -63,8 +63,6 @@ style elments
    11. return products
    12. run npm start
 10. Load Products From Backend
->	amazona > frontend > package.json >... add after 'name', enter  "proxy":"http://127.0.0.1:5000",	when you send a request from api, it will be (proxy, or) directed to the backend
->    5. install axios: cd frontend > from terminal, npm install axios
     1. edit HomeScreen.js	NOTE: instead of fetching data from the data.js in the frontend, we will instead fetch from /api/products from the backend
     2. define products, loading and error.
     3. create useEffect
@@ -118,3 +116,10 @@ style elments
     2. add reducer to store.js
     3. use action in CartScreen.js
     4. render cartItems.length
+
+16. Build Cart Screen
+    1. create 2 columns for cart items and cart action
+    2. cartItems.length === 0 ? cart is empty
+    3. show item image, name, qty and price
+    4. Proceed to Checkout button
+    5. Implement remove from cart action
