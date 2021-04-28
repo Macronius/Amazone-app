@@ -194,3 +194,11 @@ follow-along with Coding with Basir - mainly to learn how version control works
     8. return token and data
     9. test using postman
         - because you cannot test 'post' request using browser
+
+21. Design SignIn Screen
+    localhost:3000/signin
+    1. create SignInScreen
+    2. render email and password fields
+    3. define a route for signin screen in App.js
+    3. create signin constants, actions and reducers
+    4. Update Header based on user login
