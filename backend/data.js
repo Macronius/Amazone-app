@@ -17,7 +17,7 @@ const data = {
     ],
     products:[
         {
-            _id: '1',
+
             name: 'Roundtree & York Slim Shirt',
             category: 'Shirts',
             image: '../../images/p1.jpg',
@@ -29,7 +29,7 @@ const data = {
             description: 'high quality Portuguese flannel',
         },
         {
-            _id: '2',
+
             name: 'Ralph Lauren Polo',
             category: 'Shirts',
             image: '../../images/p2.jpg',
@@ -41,7 +41,7 @@ const data = {
             description: 'good',
         },
         {
-            _id: '3',
+
             name: 'Lacoste',
             category: 'Shirts',
             image: '../../images/p3.jpg',
@@ -53,7 +53,7 @@ const data = {
             description: 'high quality Portuguese flannel',
         },
         {
-            _id: '4',
+
             name: 'Roundtree Chino',
             category: 'pants',
             image: '../../images/p4.jpg',
@@ -65,7 +65,7 @@ const data = {
             description: 'high quality Portuguese flannel',
         },
         {
-            _id: '5',
+
             name: 'Polo',
             category: 'pants',
             image: '../../images/p5.jpg',
@@ -77,7 +77,7 @@ const data = {
             description: 'high quality Portuguese flannel',
         },
         {
-            _id: '6',
+
             name: 'Original Penguin Chino',
             category: 'pants',
             image: '../../images/p6.jpg',

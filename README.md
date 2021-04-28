@@ -168,3 +168,9 @@ follow-along with Coding with Basir - mainly to learn how version control works
     11. Seed sample data
     12. npm install express-async-handler
         - to solve issue of page, upon refresh of creating Admin, continuously loading with error
+
+19. Create Sample Products in MongoDB
+    1. create models/productModel.js
+    2. create productSchema and productModel
+    3. create productRoute
+    4. Seed sample data

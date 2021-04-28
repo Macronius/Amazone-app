@@ -1,6 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
-import data from "./data.js"; //IMPORTANT: append extension for files on serverside
+//import data from "./data.js"; //no need since MongoDB //IMPORTANT: append extension for files on serverside
+import productRouter from "./routers/productRouter.js";
 import userRouter from "./routers/userRouter.js";
 
 //create an app from express
@@ -16,37 +17,41 @@ mongoose.connect(process.env.MONGODB_URL || "mongodb://localhost/amazona", {
 //useNewUrlParser - to get rid of duplicated warnings
 //NOTE: the above line of code connects to the MongoDB database
 
-//use userRouter in server.js
-app.use("/api/users", userRouter);
+
 
 //define a product details api
-app.get("/api/products/:id", (req, res) => {
-  const product = data.products.find((x) => x._id === req.params.id);
-  if (product) {
-    res.send(product);
-  } else {
-    res.status(404).send({ message: "Product not Found" });
-  }
-});
+// app.get("/api/products/:id", (req, res) => {
+//   const product = data.products.find((x) => x._id === req.params.id);
+//   if (product) {
+//     res.send(product);
+//   } else {
+//     res.status(404).send({ message: "Product not Found" });
+//   }
+// });
+//NOTE: above removed because it returns static data, already handled by MongoDB
 
 //define an api
 //return products by creating another route
-app.get("/api/products", (req, res) => {
-  res.send(data.products);
-});
+// app.get("/api/products", (req, res) => {
+//   res.send(data.products);
+// });
+//NOTE: above removed because it returns static data, already handled by MongoDB
 
-//define the first route, the root of backend responds "server is ready"
+
+app.use("/api/users", userRouter);  //use userRouter and productRouter in server.js
+app.use("/api/products", productRouter);
+
+
 app.get("/", (req, res) => {
-  res.send("Server is ready");
+  res.send("Server is ready"); //define the first route, the root of backend responds "server is ready"
 });
 
-//error-catching middleware, works with expressAsyncHandler
+
 app.use((err, req, res, next) => {
-  res.status(500).send({ message: err.message });
+  res.status(500).send({ message: err.message }); //error-catching middleware, works with expressAsyncHandler
 });
 
-//define a listen() method for the app to listen for a port# from environment variable
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 5000;  //define a listen() method for the app to listen for a port# from environment variable
 app.listen(port, () => {
   console.log(`Serve at http://localhost:${port}`);
 });
