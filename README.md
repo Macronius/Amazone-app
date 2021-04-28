@@ -174,3 +174,23 @@ follow-along with Coding with Basir - mainly to learn how version control works
     2. create productSchema and productModel
     3. create productRoute
     4. Seed sample data
+
+20. Create Sign-in Backend
+    http://localhost:5000/api/users/signin
+    1. create /signin api
+    2. check email and password
+    3. generate token
+    4. npm install jsonwebtoken (generates a hash-stream)
+    5. create utils.js inside backend folder
+        - define some utility functions
+            -generateToken
+    6. create .env file in root folder
+        - right-click .env > add to .gitignore from the version control system
+    7. npm install dotenv
+        - needed for the utils.js file to read the .env file
+        - to use the contens of .env and read it in the utils.js variable, must configure dotenv in server.js
+            - not secure to store there
+            - will exist on computer...
+    8. return token and data
+    9. test using postman
+        - because you cannot test 'post' request using browser

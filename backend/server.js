@@ -1,11 +1,19 @@
 import express from "express";
 import mongoose from "mongoose";
+import dotenv from 'dotenv';
 //import data from "./data.js"; //no need since MongoDB //IMPORTANT: append extension for files on serverside
 import productRouter from "./routers/productRouter.js";
 import userRouter from "./routers/userRouter.js";
 
+//to read .env file in utils.js variable
+dotenv.config(); 
+
 //create an app from express
 const app = express();
+//parse the http request
+app.use(express.json());    //this adds a new middleware which parses json data in the body of request
+app.use(express.urlencoded( {extended: true}));
+//NOTE: by doing the above two, all data that contains like "example in postman", will be translated to req.body in the node application
 
 //connect
 mongoose.connect(process.env.MONGODB_URL || "mongodb://localhost/amazona", {
