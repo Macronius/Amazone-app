@@ -1,13 +1,18 @@
 import { createStore, compose, applyMiddleware, combineReducers } from "redux";
 import thunk from "redux-thunk";
 import { cartReducer } from "./reducers/cartReducers";
-// import data from './data';
+
 import {
   productDetailsReducer,
   productListReducer,
 } from "./reducers/productReducers";
+import { userSigninReducer } from "./reducers/userSigninReducer";
+
 
 const initialState = {
+  userSignin: {
+    userInfo: localStorage.getItem("userInfo") ? JSON.parse(localStorage.getItem("userInfo")) : null
+  },
   cart: {
     cartItems: localStorage.getItem("cartItems") //NOTE: initial value of cart based on local storage
       ? JSON.parse(localStorage.getItem("cartItems"))
@@ -19,6 +24,7 @@ const reducer = combineReducers({
   productList: productListReducer,
   productDetails: productDetailsReducer,
   cart: cartReducer,
+  userSignin: userSigninReducer,
 });
 //1st store argument: static reducer from the frontend
 // const reducer = (state, action)=> {
@@ -37,3 +43,12 @@ const store = createStore(
 export default store;
 
 //simply returns a list of products in the data.js
+//    QUESTION: what does this mean?
+
+
+
+
+//QUESTION: 
+//QUESTION: composeEnhancer..???
+//QUESTION: is 'thunk' a blanket statement or package?
+//QUESTION: middleware that is not thunk considered custom, and not custom middleware considered thunk?

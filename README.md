@@ -202,3 +202,8 @@ follow-along with Coding with Basir - mainly to learn how version control works
     3. define a route for signin screen in App.js
     3. create signin constants, actions and reducers
     4. Update Header based on user login
+
+22. Implement SignIn Action
+    1. create signin constants, actions and reducers
+    2. add reducer to store.js
+    3. use action in SigninScreen.js

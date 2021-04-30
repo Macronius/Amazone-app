@@ -222,3 +222,24 @@ img.large {
 .form input{
   background-color: rgb(199, 239, 255);
 }
+
+/*USER DROPDOWN*/
+.dropdown{
+  display: inline-block;
+  position: relative;
+}
+.dropdown-content{
+  display: none;
+  position: absolute;
+  right: 0;
+  min-width: 12rem;
+  padding: 1rem;
+  z-index: 1;
+  background-color: #203040;
+  margin: 0;
+  margin-top: 0.4rem;
+  border-radius: .5rem;
+}
+.dropdown:hover .dropdown-content{
+  display: block;
+}
