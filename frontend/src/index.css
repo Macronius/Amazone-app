@@ -180,6 +180,10 @@ img.large {
 }
 
 /*ALERT*/
+.loading{
+  display: block !important;
+}
+
 .success {
   color: #20a020;
   font-weight: bold;

@@ -1,12 +1,21 @@
 import { createStore, compose, applyMiddleware, combineReducers } from "redux";
 import thunk from "redux-thunk";
+
 import { cartReducer } from "./reducers/cartReducers";
 
 import {
   productDetailsReducer,
   productListReducer,
 } from "./reducers/productReducers";
-import { userSigninReducer } from "./reducers/userSigninReducer";
+
+import {
+  userSigninReducer,
+  userRegisterReducer,
+// } from "./reducers/userSigninReducer";
+} from "./reducers/userReducers";
+
+
+
 
 
 const initialState = {
@@ -25,6 +34,7 @@ const reducer = combineReducers({
   productDetails: productDetailsReducer,
   cart: cartReducer,
   userSignin: userSigninReducer,
+  userRegister: userRegisterReducer,
 });
 //1st store argument: static reducer from the frontend
 // const reducer = (state, action)=> {

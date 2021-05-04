@@ -1,10 +1,41 @@
 import Axios from "axios";
 import {
+  USER_REGISTER_FAIL,
+  USER_REGISTER_REQUEST,
+  USER_REGISTER_SUCCESS,
+
   USER_SIGNIN_FAIL,
   USER_SIGNIN_REQUEST,
   USER_SIGNIN_SUCCESS,
+
   USER_SIGNOUT,
 } from "../constants/userConstants";
+
+
+
+
+export const register = (name, email, password) => async (dispatch) => {
+  dispatch({ type: USER_REGISTER_REQUEST, payload: { email, password } });  //question: why is 'name' excluded?
+
+  try {
+    const { data } = await Axios.post("/api/users/register", { name, email, password });
+    dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
+    dispatch({ type: USER_SIGNIN_SUCCESS, payload: data }); //NOTE: app.js uses USER_SIGNIN_SUCCESS to authenticate user
+    localStorage.setItem("userInfo", JSON.stringify(data));
+  } catch (error) {
+    dispatch({
+      type: USER_REGISTER_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+
+
+
 
 //define signin action-function to be used by the submitHandler function on the SigninScreen.js
 export const signin = (email, password) => async (dispatch) => {
@@ -24,6 +55,9 @@ export const signin = (email, password) => async (dispatch) => {
     });
   }
 };
+
+
+
 
 
 //define signout action-function to be used by the signoutHandler function on the App.js 

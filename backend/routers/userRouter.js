@@ -41,6 +41,26 @@ userRouter.post(
   })
 );
 
+//use POST because creating
+userRouter.post(
+    "/register",
+    expressAsyncHandler(async (req, res)=> {
+        const user = new User({
+            name: req.body.name, 
+            email: req.body.email, 
+            password: bcrypt.hashSync(req.body.password, 8),
+        });
+        const createdUser = await user.save();  //create new user and set new user to createdUser
+        res.send( {
+            _id: createdUser._id,
+            name: createdUser.name,
+            email: createdUser.email,
+            isAdmin: createdUser.isAdmin,
+            token: generateToken(createdUser),
+        });
+    })
+);
+
 export default userRouter;
 
 //use express.router to create a user router
