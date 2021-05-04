@@ -227,3 +227,7 @@ follow-along with Coding with Basir - mainly to learn how version control works
 25. Create Payment Screen
     1. create payment fields
     2. implement shipping constants, actions and reducers
+
+26. Design Place Order Screen
+    1. desgin order summary fields
+    2. design order action
