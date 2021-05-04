@@ -11,21 +11,22 @@ import {
 import {
   userSigninReducer,
   userRegisterReducer,
-// } from "./reducers/userSigninReducer";
+  // } from "./reducers/userSigninReducer";
 } from "./reducers/userReducers";
-
-
-
-
 
 const initialState = {
   userSignin: {
-    userInfo: localStorage.getItem("userInfo") ? JSON.parse(localStorage.getItem("userInfo")) : null
+    userInfo: localStorage.getItem("userInfo")
+      ? JSON.parse(localStorage.getItem("userInfo"))
+      : null,
   },
   cart: {
     cartItems: localStorage.getItem("cartItems") //NOTE: initial value of cart based on local storage
       ? JSON.parse(localStorage.getItem("cartItems"))
       : [],
+    shippingAddress: localStorage.getItem("shippingAddress")  //NOTE: initial state of shippingAddress instead of ''
+      ? JSON.parse(localStorage.getItem("shippingAddress"))
+      : {},
   },
 }; //2nd store argument: preloadedState... i.e., initialState
 
@@ -55,10 +56,7 @@ export default store;
 //simply returns a list of products in the data.js
 //    QUESTION: what does this mean?
 
-
-
-
-//QUESTION: 
+//QUESTION:
 //QUESTION: composeEnhancer..???
 //QUESTION: is 'thunk' a blanket statement or package?
 //QUESTION: middleware that is not thunk considered custom, and not custom middleware considered thunk?

@@ -104,11 +104,11 @@ a.brand {
   font-weight: bold;
   color: #ffffff;
 }
-.badge{
+.badge {
   background-color: #f02020;
   color: #ffffff;
   border-radius: 50%;
-  padding: .4rem .8rem;
+  padding: 0.4rem 0.8rem;
   /* border: 1px solid orange; */
   font-size: 1.4rem;
   margin-left: 0.2rem;
@@ -132,7 +132,7 @@ a.brand {
 .col-2 {
   flex: 2 1 50rem;
 }
-.min-30{
+.min-30 {
   min-width: 30rem;
 }
 
@@ -141,7 +141,7 @@ img {
   border-radius: 0.5rem;
 }
 img.small {
-  max-width: 5rem;  /*NOTE:because rem defined as 10px, 5rem = 50px :-D! */
+  max-width: 5rem; /*NOTE:because rem defined as 10px, 5rem = 50px :-D! */
   width: 100%;
 }
 img.medium {
@@ -180,7 +180,7 @@ img.large {
 }
 
 /*ALERT*/
-.loading{
+.loading {
   display: block !important;
 }
 
@@ -208,31 +208,30 @@ img.large {
   background-color: #ffe0e0;
 }
 
-
 /*FORM*/
-.form{
+.form {
   max-width: 60rem;
   margin: 0 auto;
 }
-.form > div{
+.form > div {
   display: flex;
   flex-direction: column;
   margin: 1rem;
 }
-.form label{
+.form label {
   margin: 1rem 0;
   display: block;
 }
-.form input{
+.form input {
   background-color: rgb(199, 239, 255);
 }
 
 /*USER DROPDOWN*/
-.dropdown{
+.dropdown {
   display: inline-block;
   position: relative;
 }
-.dropdown-content{
+.dropdown-content {
   display: none;
   position: absolute;
   right: 0;
@@ -242,8 +241,21 @@ img.large {
   background-color: #203040;
   margin: 0;
   margin-top: 0.4rem;
-  border-radius: .5rem;
+  border-radius: 0.5rem;
 }
-.dropdown:hover .dropdown-content{
+.dropdown:hover .dropdown-content {
   display: block;
+}
+
+/*CHECKOUT*/
+.checkout-steps > div {
+  border-top: 0.3rem solid #c0c0c0;
+  color: #c0c0c0;
+  flex: 1; /*makes the flex item flexible and sets the flex basis to zero*/
+  padding: 1rem;
+  font-weight: bold;
+}
+.checkout-steps > div.active{
+  border-top: #f08000;
+  color: #fo8000;
 }

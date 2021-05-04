@@ -6,6 +6,7 @@ import CartScreen from "./screens/CartScreen";
 import HomeScreen from "./screens/HomeScreen";
 import ProductScreen from "./screens/ProductScreen";
 import RegisterScreen from "./screens/RegisterScreen";
+import ShippingAddressScreen from "./screens/ShippingAddressScreen";
 import SigninScreen from "./screens/SigninScreen";
 
 function App() {
@@ -60,6 +61,7 @@ function App() {
           <Route path="/cart/:id?" component={CartScreen}></Route>{" "}
           <Route path="/signin" component={SigninScreen}></Route>
           <Route path="/register" component={RegisterScreen}></Route>
+          <Route path="/shipping" component={ShippingAddressScreen}></Route>
           {/* NOTE: id is optional because user could go straight to cart directly, not through an item by adding item to cart */}
         </main>
 
