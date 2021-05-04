@@ -14,6 +14,8 @@ import {
   // } from "./reducers/userSigninReducer";
 } from "./reducers/userReducers";
 
+
+
 const initialState = {
   userSignin: {
     userInfo: localStorage.getItem("userInfo")
@@ -27,8 +29,10 @@ const initialState = {
     shippingAddress: localStorage.getItem("shippingAddress")  //NOTE: initial state of shippingAddress instead of ''
       ? JSON.parse(localStorage.getItem("shippingAddress"))
       : {},
+    paymentMethod: 'Paypal',  // <--default value
   },
 }; //2nd store argument: preloadedState... i.e., initialState
+
 
 const reducer = combineReducers({
   productList: productListReducer,

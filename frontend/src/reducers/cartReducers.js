@@ -1,4 +1,9 @@
-import { CART_ADD_ITEM, CART_REMOVE_ITEM, CART_SAVE_SHIPPING_ADDRESS } from "../constants/cartConstants";
+import {
+  CART_ADD_ITEM,
+  CART_REMOVE_ITEM,
+  CART_SAVE_SHIPPING_ADDRESS,
+  CART_SAVE_PAYMENT_METHOD,
+} from "../constants/cartConstants";
 
 export const cartReducer = (state = { cartItems: [] }, action) => {
   //why say cartItems: [] here, what if next time the array is not empty?
@@ -22,7 +27,10 @@ export const cartReducer = (state = { cartItems: [] }, action) => {
       return {...state, cartItems: state.cartItems.filter( (x)=> x.product !== action.payload )};//REMEMBER, removing an item is actually returning everything except that item
     
     case CART_SAVE_SHIPPING_ADDRESS:
-      return {...state, shippingAddress: action.payload }
+      return {...state, shippingAddress: action.payload };
+
+    case CART_SAVE_PAYMENT_METHOD:
+      return {...state, paymentMethod: action.payload};
 
     default:
       return state;

@@ -219,7 +219,11 @@ follow-along with Coding with Basir - mainly to learn how version control works
     8. create register action and reducer
     9. check validation and create user
 
-24.  Create Shipping Screen
+24. Create Shipping Screen
     1. create CheckoutSteps.js component
     2. create shipping fields
     3. implement shipping constant, actions and reducers
+
+25. Create Payment Screen
+    1. create payment fields
+    2. implement shipping constants, actions and reducers

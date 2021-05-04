@@ -220,7 +220,7 @@ img.large {
 }
 .form label {
   margin: 1rem 0;
-  display: block;
+  /* display: block; */
 }
 .form input {
   background-color: rgb(199, 239, 255);
@@ -256,6 +256,6 @@ img.large {
   font-weight: bold;
 }
 .checkout-steps > div.active{
-  border-top: #f08000;
-  color: #fo8000;
+  border-top: .3rem solid #f08000;
+  color: #f08000;
 }
