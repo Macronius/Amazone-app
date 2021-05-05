@@ -239,3 +239,7 @@ follow-along with Coding with Basir - mainly to learn how version control works
     3.b add to utils.js - to get info about user that created the order, define a middleware
     4. create past order route
     
+28. Implement PlaceOrder Action
+    - when user click on placeorder, a new action happens in the redux store and call the api for creating an order in the backend and redirect user to the order details page, also it calls cart empty to make the cart empty after placing the order
+    1. handle place order button click
+    2. create place order constants, action and reducer

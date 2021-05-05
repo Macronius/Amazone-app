@@ -44,7 +44,7 @@ export default function SigninScreen(props) {
         {loading && <LoadingBox></LoadingBox>}
         {error && <MessageBox variant="danger">{error}</MessageBox>}
         <div>
-          <label forHTML="email">Email</label>
+          <label htmlFor="email">Email</label>
           <input
             type="email"
             id="email"
@@ -55,7 +55,7 @@ export default function SigninScreen(props) {
           {/* html5 validation system */}
         </div>
         <div>
-          <label forHTML="password">Password</label>
+          <label htmlFor="password">Password</label>
           <input
             type="password"
             id="password"

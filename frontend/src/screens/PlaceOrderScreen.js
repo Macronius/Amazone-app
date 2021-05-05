@@ -1,7 +1,11 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { createOrder } from '../actions/orderActions';
 import CheckoutSteps from '../components/CheckoutSteps';
+import MessageBox from '../components/MessageBox';
+import LoadingBox from '../components/LoadingBox';
+import { ORDER_CREATE_RESET } from '../constants/orderConstants';
 // import { cartReducer } from '../reducers/cartReducers';
 
 export default function PlaceOrderScreen(props){
@@ -12,6 +16,10 @@ export default function PlaceOrderScreen(props){
         props.history.push('/payment');
     }
 
+    //get orderCreate object from redux store using useSelector
+    const orderCreate = useSelector( state=> state.orderCreate);
+    const {loading, success, error, order} = orderCreate;  //destructure orderCreate
+
     //define a helper function
     const toPrice = (num)=> Number(num.toFixed(2)); // 5.126 => "5.13" => 5.13
 
@@ -21,9 +29,22 @@ export default function PlaceOrderScreen(props){
     cart.taxPrice = toPrice(0.15 * cart.itemsPrice);
     cart.totalPrice = cart.itemsPrice + cart.shippingPrice + cart.taxPrice;
 
+    const dispatch = useDispatch();
+    
+
     const placeOrderHandler = ()=> {
-        //TODO: dispatch place order action
+        //TODO: dispatch place order action, convert cart items to order items
+        dispatch(createOrder({...cart, orderItems: cart.cartItems})); //use all fields of cart object and replace cartItems with orderItems
+        //IMPLEMENT in orderActions
     }
+
+    useEffect( ()=> {
+      if(success){
+        props.history.push(`/order/${order._id}`);
+        dispatch({type: ORDER_CREATE_RESET});
+      }
+    }, [ dispatch, order, props.history, success])
+
     return (
       <div>
         <CheckoutSteps step1 step2 step3 step4 />
@@ -130,6 +151,8 @@ export default function PlaceOrderScreen(props){
                     Place Order
                   </button>
                 </li>
+                {loading && <LoadingBox></LoadingBox>}
+                {error && <MessageBox variant="danger">{error}</MessageBox>}
               </ul>
             </div>
           </div>

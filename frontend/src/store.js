@@ -11,9 +11,9 @@ import {
 import {
   userSigninReducer,
   userRegisterReducer,
-  // } from "./reducers/userSigninReducer";
 } from "./reducers/userReducers";
 
+import {orderCreateReducer} from "./reducers/orderReducers";
 
 
 const initialState = {
@@ -40,6 +40,7 @@ const reducer = combineReducers({
   cart: cartReducer,
   userSignin: userSigninReducer,
   userRegister: userRegisterReducer,
+  orderCreate: orderCreateReducer,
 });
 //1st store argument: static reducer from the frontend
 // const reducer = (state, action)=> {
