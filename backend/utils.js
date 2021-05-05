@@ -15,6 +15,33 @@ export const generateToken = (user) => {
   );
 };
 
+//create a middleware to authenticate the user, which accept 3 parameters
+export const isAuth = (req, res, next) => {
+  //get authorizations filled from headers of this request
+  const authorization = req.headers.authorization;
+  if (authorization) {
+    //get the token of the request
+    const token = authorization.slice(7, authorization.length); // Bearer XXXXXX - skip the first 7 and take only the token
+    //decrypt the token, where decode contains the data about the user inside the token
+    jwt.verify(
+      token,
+      process.env.JWT_SECRET || "somethingsecret",
+      (err, decode) => {
+        if (err) {
+          res.status(401).send({ message: "Invalid Token" });
+        } else {
+          //correct token: note: jwt.verify returned the jwt.sign() data inside 'decode' variable, then set those data inside req.user
+          req.user = decode;
+          //by passing next(), we pass user as a property of req ( req.user = decode ) to the next middleware, in this case, in orderRouter.js assigned isAuth
+          next();
+        }
+      }
+    );
+  } else {
+    res.status(401).send({ message: "No Token" });
+  }
+};
+
 //NOTE: jwt json web token
 //.sign takes 3 parameters
 //      1st: user object ( { objectUsedToGenerateToken, })

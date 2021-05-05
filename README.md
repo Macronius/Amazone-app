@@ -231,3 +231,11 @@ follow-along with Coding with Basir - mainly to learn how version control works
 26. Design Place Order Screen
     1. desgin order summary fields
     2. design order action
+
+27. Create Place Order API  /api/order
+    1. createOrder api
+    2. create orderModel
+    3. create orderRouter
+    3.b add to utils.js - to get info about user that created the order, define a middleware
+    4. create past order route
+    
