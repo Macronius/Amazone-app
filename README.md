@@ -49,18 +49,18 @@ follow-along with Coding with Basir - mainly to learn how version control works
    6. add new Route from product details to App.js
    7. create 3 columns for: product image, info and action
 9. Create Node.JS Server
-    1. run npm init in root folder
-    2. Update package.json set type: module
-    3. Add .js to imports
-    4. npm install express
-    5. create server.js (entry point of the backend application) / next create express server application
-    6. add start command as: node backend/server.js NOTE: will receive error: SyntaxError: (Cannot use import statement outside a module) to fix, go to package.json, beneath name: add "type":"module",
-    7. require express
-    8. create route for / return backend is ready.
-    9. move products.js from frontend to backend
-    10. create route for /api/products
-    11. return products
-    12. run npm start
+   1. run npm init in root folder
+   2. Update package.json set type: module
+   3. Add .js to imports
+   4. npm install express
+   5. create server.js (entry point of the backend application) / next create express server application
+   6. add start command as: node backend/server.js NOTE: will receive error: SyntaxError: (Cannot use import statement outside a module) to fix, go to package.json, beneath name: add "type":"module",
+   7. require express
+   8. create route for / return backend is ready.
+   9. move products.js from frontend to backend
+   10. create route for /api/products
+   11. return products
+   12. run npm start
 10. Load Products From Backend
 
     1. edit HomeScreen.js NOTE: instead of fetching data from the data.js in the frontend, we will instead fetch from /api/products from the backend
@@ -141,22 +141,25 @@ follow-along with Coding with Basir - mainly to learn how version control works
     3. use action in CartScreen.js
 
 18. Create Sample Users in MongoDB
+
     1. npm install mongoose (in the root directory)
+
     - create a model; in the backend directory, create folder called 'models'
-        - create a schema
-        - create a model
-        - export
+      - create a schema
+      - create a model
+      - export
     - create a seed API to create an admin user
-        - create router
-        - update data.js from backend to include users
-            - note: passwords must be incrypted
-            - npm install bcryptjs
-            - import bcrypt from 'bcryptjs'
-        - define a get method for seed API
+      - create router
+      - update data.js from backend to include users
+        - note: passwords must be incrypted
+        - npm install bcryptjs
+        - import bcrypt from 'bcryptjs'
+      - define a get method for seed API
+
     2. connect server.js to mongodb
-        - in server.js
-            - import express and mongoose
-            - mongoose.connect()
+       - in server.js
+         - import express and mongoose
+         - mongoose.connect()
     3. create config.js
     4. npm install dotenv
     5. export MONGODB_URL
@@ -170,6 +173,7 @@ follow-along with Coding with Basir - mainly to learn how version control works
         - to solve issue of page, upon refresh of creating Admin, continuously loading with error
 
 19. Create Sample Products in MongoDB
+
     1. create models/productModel.js
     2. create productSchema and productModel
     3. create productRoute
@@ -177,38 +181,42 @@ follow-along with Coding with Basir - mainly to learn how version control works
 
 20. Create Sign-in Backend
     http://localhost:5000/api/users/signin
+
     1. create /signin api
     2. check email and password
     3. generate token
     4. npm install jsonwebtoken (generates a hash-stream)
     5. create utils.js inside backend folder
-        - define some utility functions
-            -generateToken
+       - define some utility functions
+         -generateToken
     6. create .env file in root folder
-        - right-click .env > add to .gitignore from the version control system
+       - right-click .env > add to .gitignore from the version control system
     7. npm install dotenv
-        - needed for the utils.js file to read the .env file
-        - to use the contens of .env and read it in the utils.js variable, must configure dotenv in server.js
-            - not secure to store there
-            - will exist on computer...
+       - needed for the utils.js file to read the .env file
+       - to use the contens of .env and read it in the utils.js variable, must configure dotenv in server.js
+         - not secure to store there
+         - will exist on computer...
     8. return token and data
     9. test using postman
-        - because you cannot test 'post' request using browser
+       - because you cannot test 'post' request using browser
 
 21. Design SignIn Screen
     localhost:3000/signin
+
     1. create SignInScreen
     2. render email and password fields
     3. define a route for signin screen in App.js
-    3. create signin constants, actions and reducers
-    4. Update Header based on user login
+    4. create signin constants, actions and reducers
+    5. Update Header based on user login
 
 22. Implement SignIn Action
+
     1. create signin constants, actions and reducers
     2. add reducer to store.js
     3. use action in SigninScreen.js
 
 23. Create Register Screen
+
     1. create API for /api/users/register
     2. insert new user to database
     3. return user info and token
@@ -220,35 +228,57 @@ follow-along with Coding with Basir - mainly to learn how version control works
     9. check validation and create user
 
 24. Create Shipping Screen
+
     1. create CheckoutSteps.js component
     2. create shipping fields
     3. implement shipping constant, actions and reducers
 
 25. Create Payment Screen
+
     1. create payment fields
     2. implement shipping constants, actions and reducers
 
 26. Design Place Order Screen
+
     1. desgin order summary fields
     2. design order action
 
-27. Create Place Order API  /api/order
+27. Create Place Order API /api/order
     1. createOrder api
     2. create orderModel
     3. create orderRouter
-    3.b add to utils.js - to get info about user that created the order, define a middleware
+       3.b add to utils.js - to get info about user that created the order, define a middleware
     4. create past order route
-    
 28. Implement PlaceOrder Action
+
     - when user click on placeorder, a new action happens in the redux store and call the api for creating an order in the backend and redirect user to the order details page, also it calls cart empty to make the cart empty after placing the order
+
     1. handle place order button click
     2. create place order constants, action and reducer
 
 29. Create Order Screen
+
     - after placing an order by user, need to show the order information in a new screen and make it possible for user to make payment
+
     1. build order api for /api/orders/:id
     2. create OrderScreen.js
     3. dispatch order details action in useEffect
     4. load data with useSelector
     5. show data like place order screen
     6. create order details constant, action and reducer
+
+30. Add PayPal Button
+    1. get client id from paypal
+        - developer.paypal.com
+        - login to dashboard
+        - Dashboard > My Apps & Credentials
+        - Sandbox > Create App (after everything works, go back and create a livekey instead of a sandbox key)
+        - enter an App Name and Create App - to get a client ID
+    2. set it in .env file
+    3. create route from /api/paypal/clientId
+        - the PAYPAL_CLIENT_ID is on the backend, but it is needed on the client, therefore solution is create an api to send from backend to frontend
+    4. create getPaypalClientID in api.js
+    5. add paypal checkout script in OrderScreen.js
+    6. show paypal button
+        - npm install react-paypall-button-v2
+    NOTE: to get a paypal live key, just follow the above steps under 'live' option instead of 'sandbox' option, then take that key and replace in .env PAYPAL_CLIENT_ID
