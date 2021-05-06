@@ -243,3 +243,12 @@ follow-along with Coding with Basir - mainly to learn how version control works
     - when user click on placeorder, a new action happens in the redux store and call the api for creating an order in the backend and redirect user to the order details page, also it calls cart empty to make the cart empty after placing the order
     1. handle place order button click
     2. create place order constants, action and reducer
+
+29. Create Order Screen
+    - after placing an order by user, need to show the order information in a new screen and make it possible for user to make payment
+    1. build order api for /api/orders/:id
+    2. create OrderScreen.js
+    3. dispatch order details action in useEffect
+    4. load data with useSelector
+    5. show data like place order screen
+    6. create order details constant, action and reducer

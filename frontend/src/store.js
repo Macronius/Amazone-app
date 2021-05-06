@@ -13,8 +13,10 @@ import {
   userRegisterReducer,
 } from "./reducers/userReducers";
 
-import {orderCreateReducer} from "./reducers/orderReducers";
-
+import {
+  orderCreateReducer,
+  orderDetailsReducer,
+} from "./reducers/orderReducers";
 
 const initialState = {
   userSignin: {
@@ -26,13 +28,12 @@ const initialState = {
     cartItems: localStorage.getItem("cartItems") //NOTE: initial value of cart based on local storage
       ? JSON.parse(localStorage.getItem("cartItems"))
       : [],
-    shippingAddress: localStorage.getItem("shippingAddress")  //NOTE: initial state of shippingAddress instead of ''
+    shippingAddress: localStorage.getItem("shippingAddress") //NOTE: initial state of shippingAddress instead of ''
       ? JSON.parse(localStorage.getItem("shippingAddress"))
       : {},
-    paymentMethod: 'Paypal',  // <--default value
+    paymentMethod: "Paypal", // <--default value
   },
 }; //2nd store argument: preloadedState... i.e., initialState
-
 
 const reducer = combineReducers({
   productList: productListReducer,
@@ -41,6 +42,7 @@ const reducer = combineReducers({
   userSignin: userSigninReducer,
   userRegister: userRegisterReducer,
   orderCreate: orderCreateReducer,
+  orderDetails: orderDetailsReducer,
 });
 //1st store argument: static reducer from the frontend
 // const reducer = (state, action)=> {

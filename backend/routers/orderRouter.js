@@ -39,6 +39,20 @@ orderRouter.post(
   })
 );
 
+
+orderRouter.get(
+  '/:id', //note: /api/orders/:id, where the prefix /api/orders is defined in server.js
+  isAuth,   //NOTE: only authenticated user can see order details
+  expressAsyncHandler(async (req, res)=> {
+    const order = await Order.findById(req.params.id); //get order from database
+    if(order){
+      res.send(order);
+    }else{
+      res.status(404).send({message: 'Order Not Found'});
+    }
+  })//NOTE: use expressAsyncHandler to catch any error in async functions
+);
+
 export default orderRouter;
 
 //NOTE: by calling next() function inside isAuth, req.user will be filled by user information
