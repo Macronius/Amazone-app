@@ -39,18 +39,41 @@ orderRouter.post(
   })
 );
 
-
 orderRouter.get(
-  '/:id', //note: /api/orders/:id, where the prefix /api/orders is defined in server.js
-  isAuth,   //NOTE: only authenticated user can see order details
-  expressAsyncHandler(async (req, res)=> {
+  "/:id", //note: /api/orders/:id, where the prefix /api/orders is defined in server.js
+  isAuth, //NOTE: only authenticated user can see order details
+  expressAsyncHandler(async (req, res) => {
     const order = await Order.findById(req.params.id); //get order from database
-    if(order){
+    if (order) {
       res.send(order);
-    }else{
-      res.status(404).send({message: 'Order Not Found'});
+    } else {
+      res.status(404).send({ message: "Order Not Found" });
     }
-  })//NOTE: use expressAsyncHandler to catch any error in async functions
+  }) //NOTE: use expressAsyncHandler to catch any error in async functions
+);
+
+//update the status of a source
+orderRouter.put(
+  "/:id/pay",
+  isAuth,
+  expressAsyncHandler(async (req, res) => {
+    const order = await Order.findById(req.params.id); //QUESTION: in the orderModel, there is no parameter called id... what is this refering to?
+    if (order) {
+      //if order is exists, update the order
+      order.isPaid = true;
+      order.paidAt = Date.now();
+      order.paymentResult = {
+        id: req.body.id,
+        status: req.body.status,
+        update_time: req.body.update_time,
+        email_address: req.body.email_address,
+      };
+      const updatedOrder = await order.save();
+      res.send({ message: "Order Paid", order: updatedOrder }); //send to frontend
+    } else {
+      res.status(404).send({ message: "Order Not Found" });
+    }
+  })
 );
 
 export default orderRouter;

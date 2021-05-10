@@ -268,17 +268,23 @@ follow-along with Coding with Basir - mainly to learn how version control works
     6. create order details constant, action and reducer
 
 30. Add PayPal Button
+
     1. get client id from paypal
-        - developer.paypal.com
-        - login to dashboard
-        - Dashboard > My Apps & Credentials
-        - Sandbox > Create App (after everything works, go back and create a livekey instead of a sandbox key)
-        - enter an App Name and Create App - to get a client ID
+       - developer.paypal.com
+       - login to dashboard
+       - Dashboard > My Apps & Credentials
+       - Sandbox > Create App (after everything works, go back and create a livekey instead of a sandbox key)
+       - enter an App Name and Create App - to get a client ID
     2. set it in .env file
     3. create route from /api/paypal/clientId
-        - the PAYPAL_CLIENT_ID is on the backend, but it is needed on the client, therefore solution is create an api to send from backend to frontend
+       - the PAYPAL_CLIENT_ID is on the backend, but it is needed on the client, therefore solution is create an api to send from backend to frontend
     4. create getPaypalClientID in api.js
     5. add paypal checkout script in OrderScreen.js
-    6. show paypal button
-        - npm install react-paypall-button-v2
-    NOTE: to get a paypal live key, just follow the above steps under 'live' option instead of 'sandbox' option, then take that key and replace in .env PAYPAL_CLIENT_ID
+    6. show paypal button - npm install react-paypall-button-v2
+       NOTE: to get a paypal live key, just follow the above steps under 'live' option instead of 'sandbox' option, then take that key and replace in .env PAYPAL_CLIENT_ID
+
+31. Implemennt Order Payment
+    1. update order after payment
+    2. create payment in api.js
+    3. create route for /:id/pay in orderRouter.js
+    4. rerender after pay order

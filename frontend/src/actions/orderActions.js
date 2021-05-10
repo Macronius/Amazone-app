@@ -7,6 +7,9 @@ import {
   ORDER_DETAILS_FAIL,
   ORDER_DETAILS_REQUEST,
   ORDER_DETAILS_SUCCESS,
+  ORDER_PAY_REQUEST,
+  ORDER_PAY_SUCCESS,
+  ORDER_PAY_FAIL,
 } from "../constants/orderConstants";
 
 //accept order as a parameter, save order in database, and return an async functiont htat accepts dispatch and getState and returns the function, where dispatch and getState will be filled? by redux-thunk
@@ -54,5 +57,29 @@ export const detailsOrder = (orderId) => async (dispatch, getState) => {
         ? error.response.data.message
         : error.message;
     dispatch({ type: ORDER_DETAILS_FAIL, payload: message });
+  }
+};
+
+export const payOrder = (order, paymentResult) => async (
+  dispatch,
+  getState
+) => {
+  dispatch({ type: ORDER_PAY_REQUEST, payload: { order, paymentResult } });
+  const {
+    userSignin: { userInfo },
+  } = getState();
+
+  //send ajax request
+  try {
+    const { data } = Axios.put(`/api/orders/${order._id}/pay`, paymentResult, {
+      headers: { Authorization: `Bearer ${userInfo.token}` },
+    }); // .put() because calling the pay api and that type of api is 'put'
+    dispatch({ type: ORDER_PAY_SUCCESS, payload: data });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    dispatch({ type: ORDER_PAY_FAIL, payload: message });
   }
 };

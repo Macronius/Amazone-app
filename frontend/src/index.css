@@ -207,6 +207,10 @@ img.large {
   color: #a02020;
   background-color: #ffe0e0;
 }
+.alert-success {
+  color: #20a020;
+  background-color: #eeffe0;
+}
 
 /*FORM*/
 .form {
@@ -255,7 +259,7 @@ img.large {
   padding: 1rem;
   font-weight: bold;
 }
-.checkout-steps > div.active{
-  border-top: .3rem solid #f08000;
+.checkout-steps > div.active {
+  border-top: 0.3rem solid #f08000;
   color: #f08000;
 }
