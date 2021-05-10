@@ -5,6 +5,15 @@ import { isAuth } from "../utils.js";
 
 const orderRouter = express.Router();
 
+orderRouter.get(
+  "/mine",
+  isAuth,
+  expressAsyncHandler(async (req, res) => {
+    const orders = await Order.find({ user: req.user._id });
+    res.send(orders); //backend send orders of current user to frontend
+  })
+);
+
 //create an api for post request to /api/orders
 //NOTE: in this case, '/' means '/api/orders'
 //NOTE: as a parameter of this expressAsyncHandler, define another function as an async that accepts request and response to build the api
