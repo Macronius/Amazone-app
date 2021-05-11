@@ -53,6 +53,9 @@ export default function ProfileScreen() {
               />
             </div>
             <div>
+                <h2>Change Password</h2>
+            </div>
+            <div>
               <label htmlFor="password">Password</label>
               <input type="text" id="password" placeholder="Enter password" />
             </div>
