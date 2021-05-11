@@ -1,6 +1,6 @@
 import express from "express";
 import expressAsyncHandler from "express-async-handler";
-import bcrypt from 'bcryptjs';
+import bcrypt from "bcryptjs";
 import data from "../data.js";
 import User from "../models/userModel.js";
 import { generateToken } from "../utils.js";
@@ -37,28 +37,40 @@ userRouter.post(
         return;
       }
     }
-    res.status(401).send( {message: "Invalid email or password"});
+    res.status(401).send({ message: "Invalid email or password" });
   })
 );
 
 //use POST because creating
 userRouter.post(
-    "/register",
-    expressAsyncHandler(async (req, res)=> {
-        const user = new User({
-            name: req.body.name, 
-            email: req.body.email, 
-            password: bcrypt.hashSync(req.body.password, 8),
-        });
-        const createdUser = await user.save();  //create new user and set new user to createdUser
-        res.send( {
-            _id: createdUser._id,
-            name: createdUser.name,
-            email: createdUser.email,
-            isAdmin: createdUser.isAdmin,
-            token: generateToken(createdUser),
-        });
-    })
+  "/register",
+  expressAsyncHandler(async (req, res) => {
+    const user = new User({
+      name: req.body.name,
+      email: req.body.email,
+      password: bcrypt.hashSync(req.body.password, 8),
+    });
+    const createdUser = await user.save(); //create new user and set new user to createdUser
+    res.send({
+      _id: createdUser._id,
+      name: createdUser.name,
+      email: createdUser.email,
+      isAdmin: createdUser.isAdmin,
+      token: generateToken(createdUser),
+    });
+  })
+);
+
+userRouter.get(
+  "/:id",
+  expressAsyncHandler(async (req, res) => {
+    const user = await User.findById(req.params.id);    //QUESTION: why do I have to specify .id if i'm findById ?
+    if (user) {
+      res.send(user);
+    } else {
+      res.status(404).send({ message: "User Not Found" });
+    }
+  })
 );
 
 export default userRouter;
