@@ -9,6 +9,10 @@ import {
   USER_SIGNIN_REQUEST,
   USER_SIGNIN_SUCCESS,
   USER_SIGNOUT,
+  USER_UPDATE_PROFILE_FAIL,
+  USER_UPDATE_PROFILE_REQUEST,
+  USER_UPDATE_PROFILE_SUCCESS,
+  USER_UPDATE_PROFILE_RESET,
 } from "../constants/userConstants";
 
 export const userSigninReducer = (state = {}, action) => {
@@ -51,7 +55,23 @@ export const userDetailsReducer = (state = { loading: true }, action) => {
       return state;
   }
 };
+
+export const userUpdateProfileReducer = (state = {}, action) => {
+  switch (action.type) {
+    case USER_UPDATE_PROFILE_REQUEST:
+      return { loading: true };
+    case USER_UPDATE_PROFILE_SUCCESS:
+      return { loading: false, success: true };
+    case USER_UPDATE_PROFILE_FAIL:
+      return { loading: false, error: action.payload };
+    case USER_UPDATE_PROFILE_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
 //NOTE: initial state loading: true because when page first loads, it loads this info
+//QUESTION: what is the difference between USER_UPDATE_PROFILE_RESET return empty object and default return state?
 
 //action.payload comes from 'productActions.js' line 42 aka, the dispatch for type PRODUCT_DETAILS_SUCCESS, which is the data from the backend
 //for FAIL, the error also comes from the backend

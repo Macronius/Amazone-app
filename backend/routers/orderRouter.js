@@ -85,8 +85,6 @@ orderRouter.put(
   })
 );
 
-
-
 export default orderRouter;
 
 //NOTE: by calling next() function inside isAuth, req.user will be filled by user information

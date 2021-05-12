@@ -3,7 +3,7 @@ import expressAsyncHandler from "express-async-handler";
 import bcrypt from "bcryptjs";
 import data from "../data.js";
 import User from "../models/userModel.js";
-import { generateToken } from "../utils.js";
+import { generateToken, isAuth } from "../utils.js";
 
 const userRouter = express.Router();
 
@@ -18,6 +18,7 @@ userRouter.get(
   })
 );
 
+//=============================== P O S T
 //create sign-in router
 userRouter.post(
   "/signin",
@@ -41,11 +42,11 @@ userRouter.post(
   })
 );
 
-//use POST because creating
 userRouter.post(
   "/register",
   expressAsyncHandler(async (req, res) => {
     const user = new User({
+      //QUESTION: did I create User or is it built-in somewhere?
       name: req.body.name,
       email: req.body.email,
       password: bcrypt.hashSync(req.body.password, 8),
@@ -61,10 +62,11 @@ userRouter.post(
   })
 );
 
+//=============================== G E T
 userRouter.get(
   "/:id",
   expressAsyncHandler(async (req, res) => {
-    const user = await User.findById(req.params.id);    //QUESTION: why do I have to specify .id if i'm findById ?
+    const user = await User.findById(req.params.id); //QUESTION: why do I have to specify .id if i'm findById ?
     if (user) {
       res.send(user);
     } else {
@@ -72,6 +74,44 @@ userRouter.get(
     }
   })
 );
+
+//=============================== P U T
+userRouter.put(
+  "/profile",
+  isAuth,
+  expressAsyncHandler(async (req, res) => {
+    //get user from database
+    const user = await User.findById(req.user._id); //by the id of the logged-in user
+    //QUESTION: where is the _id for comparison?
+    //QUESTION: which file is being searched for this process?
+    //QUESTION: why does User not have to be instantiated like above in '/register'
+
+    if (user) {
+      //update user information
+      user.name = req.body.name || user.name; //if name from ProfileScreen exists, then use it, else use existing name
+      user.email = req.body.email || user.email;
+      if (req.body.password) {
+        //take extra step to encrypt the password
+        user.password = bcrypt.hashSync(req.body.password, 8); //8 generates the auto-salt
+      }
+
+      const updatedUser = await user.save();
+
+      //send id of user from updated user
+      res.send({
+        _id: updatedUser._id,
+        name: updatedUser.name,
+        email: updatedUser.email,
+        isAdmin: updatedUser.isAdmin,
+        token: generateToken(updatedUser),
+      });
+    }
+  })
+);
+//NOTE: unauthenticated user should not be able to see the ProfileScreen at all
+//        - requires a PrivateRoute.js component
+
+//NOTE: it seems the function of this is to repost the entire contents of the user profile every time update, either re-write or over-write
 
 export default userRouter;
 

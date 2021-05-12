@@ -284,17 +284,24 @@ follow-along with Coding with Basir - mainly to learn how version control works
        NOTE: to get a paypal live key, just follow the above steps under 'live' option instead of 'sandbox' option, then take that key and replace in .env PAYPAL_CLIENT_ID
 
 31. Implemennt Order Payment
+
     1. update order after payment
     2. create payment in api.js
     3. create route for /:id/pay in orderRouter.js
     4. rerender after pay order
 
 32. Display Order History
+
     1. create customer orders api
     2. create api for getMyOrders
     3. show orders in profile screen
     4. style orders
 
 33. Display User Profile
+
     1. create user details api
     2. show user information
+
+34. Update User Profile
+    1. create user update api
+    2. update user info

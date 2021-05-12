@@ -12,6 +12,7 @@ import {
   userSigninReducer,
   userRegisterReducer,
   userDetailsReducer,
+  userUpdateProfileReducer,
 } from "./reducers/userReducers";
 
 import {
@@ -49,6 +50,7 @@ const reducer = combineReducers({
   orderPay: orderPayReducer,
   orderMineList: orderMineListReducer,
   userDetails: userDetailsReducer,
+  userUpdateProfile: userUpdateProfileReducer,
 });
 //1st store argument: static reducer from the frontend
 // const reducer = (state, action)=> {
