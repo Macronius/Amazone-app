@@ -22,10 +22,10 @@ function App() {
   const { userInfo } = userSignin; //QUESTION: why done in 2 lines not 1?
 
   const dispatch = useDispatch();
-  const signoutHandler = ()=> {
+  const signoutHandler = () => {
     //first establish a signout action in userActions.js
     dispatch(signout());
-  }
+  };
 
   return (
     <BrowserRouter>
@@ -66,6 +66,28 @@ function App() {
             ) : (
               <Link to="/signin">Sign In</Link>
             )}
+
+            {userInfo && userInfo.isAdmin && (
+              <div className="dropdown">
+                <Link to="#admin">
+                  Admin <i className="fa fa-caret-down"></i>
+                </Link>
+                <ul className="dropdown-content">
+                  <li>
+                    <Link to="/dashboard">Dashboard</Link>
+                  </li>
+                  <li>
+                    <Link to="/productList">Products</Link>
+                  </li>
+                  <li>
+                    <Link to="/orderList">Orders</Link>
+                  </li>
+                  <li>
+                    <Link to="/userList">Users</Link>
+                  </li>
+                </ul>
+              </div>
+            )}
           </div>
         </header>
 
@@ -80,7 +102,10 @@ function App() {
           <Route path="/placeorder" component={PlaceOrderScreen}></Route>
           <Route path="/order/:id" component={OrderScreen}></Route>
           <Route path="/orderhistory" component={OrderHistoryScreen}></Route>
-          <PrivateRoute path="/profile" component={ProfileScreen}></PrivateRoute>
+          <PrivateRoute
+            path="/profile"
+            component={ProfileScreen}
+          ></PrivateRoute>
           {/* NOTE: id is optional because user could go straight to cart directly, not through an item by adding item to cart */}
         </main>
 

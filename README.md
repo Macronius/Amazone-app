@@ -303,5 +303,11 @@ follow-along with Coding with Basir - mainly to learn how version control works
     2. show user information
 
 34. Update User Profile
+
     1. create user update api
     2. update user info
+
+35. Create Admin View
+    1. create Admin menu
+    2. create Admin middleware in backend
+    3. create AdminRoute in frontend
