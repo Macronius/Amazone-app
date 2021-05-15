@@ -311,3 +311,8 @@ follow-along with Coding with Basir - mainly to learn how version control works
     1. create Admin menu
     2. create Admin middleware in backend
     3. create AdminRoute in frontend
+
+36. List Products for Admin
+    1. Create Product List Screen
+    2. Add reducer to store
+    3. show products on the screen
