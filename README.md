@@ -316,3 +316,16 @@ follow-along with Coding with Basir - mainly to learn how version control works
     1. Create Product List Screen
     2. Add reducer to store
     3. show products on the screen
+
+37. Create Product
+    1. build create product api
+    2. built Create Product button
+    3. define product create constant, action and reducer
+    4. use action in ProductListScreen
+
+38. Build Product Edit Screen
+    1. create edit screen
+    2. define state
+    3. create fields
+    4. load product details
+    5. add to routes
