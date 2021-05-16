@@ -25,7 +25,7 @@ export default function PoductEditScreen(props) {
   const dispatch = useDispatch();
   useEffect(() => {
     //if product exists, then set value for react hook
-    if (!product) {
+    if (!product || product._id !== productId) {
       dispatch(detailsProduct(productId));
     } else {
       setName(product.name);
