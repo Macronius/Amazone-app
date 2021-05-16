@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { detailsProduct } from "../actions/productActions";
+import { detailsProduct, updateProduct } from "../actions/productActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
+import { PRODUCT_UPDATE_RESET } from "../constants/productConstants";
 
 export default function PoductEditScreen(props) {
   //get product id from the url
@@ -21,11 +22,23 @@ export default function PoductEditScreen(props) {
   const { loading, error, product } = productDetails;
   //QUESTION: above 'product' comes from 'payload: data' in detailsProduct action?
 
+  const productUpdate = useSelector((state) => state.productUpdate);
+  const {
+    loading: loadingUpdate,
+    success: successUpdate,
+    error: errorUpdate,
+  } = productUpdate;
+
   //dispatch detailsProduct
   const dispatch = useDispatch();
+
   useEffect(() => {
+    if (successUpdate) {
+      props.history.push("/productlist");
+    }
     //if product exists, then set value for react hook
-    if (!product || product._id !== productId) {
+    if (!product || product._id !== productId || successUpdate) {
+      dispatch({ type: PRODUCT_UPDATE_RESET });
       dispatch(detailsProduct(productId));
     } else {
       setName(product.name);
@@ -36,11 +49,24 @@ export default function PoductEditScreen(props) {
       setBrand(product.brand);
       setDescription(product.description);
     }
-  }, [dispatch, product, productId]);
+  }, [dispatch, product, productId, successUpdate, props.history]);
+  //NOTE: two things are contingent upon successUpdate, but are triggered by two different conditionals
 
   const submitHandler = (e) => {
     e.preventDefault();
-    // TODO: dispatch update product
+
+    dispatch(
+      updateProduct({
+        _id: productId, //NOTE: renaming _id as productId
+        name,
+        price,
+        image,
+        category,
+        brand,
+        countInStock,
+        description,
+      })
+    );
   };
 
   return (
@@ -49,6 +75,8 @@ export default function PoductEditScreen(props) {
         <div>
           <h1>Edit Product {productId}</h1>
         </div>
+        {loadingUpdate && <LoadingBox></LoadingBox>}
+        {errorUpdate && <MessageBox variant="danger">{errorUpdate}</MessageBox>}
         {loading ? (
           <LoadingBox></LoadingBox>
         ) : error ? (

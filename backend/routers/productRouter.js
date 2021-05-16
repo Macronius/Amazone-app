@@ -60,4 +60,34 @@ productRouter.post(
   })
 );
 
+// 'post' because a product must have been created in order to be edited
+productRouter.put(
+  "/:id",
+  isAuth,
+  isAdmin,
+  expressAsyncHandler(async (req, res) => {
+    const productId = req.params.id;
+    const product = await Product.findById(productId); //QUESTION: what exactly is 'Product' ?
+    if (product) {
+      product.name = req.body.name;
+      product.price = req.body.price;
+      product.image = req.body.image;
+      product.category = req.body.category;
+      product.brand = req.body.brand;
+      product.countInStock = req.body.countInStock;
+      product.description = req.body.description;
+
+      const updatedProduct = await product.save();
+
+      res.send({
+        message: "Product Updated Successfully",
+        product: updatedProduct,
+      }); //QUESTION: what happens if I change 'product:' to 'payload:' ?
+    } else {
+      res.status(404).send({ message: "Product not found" });
+    }
+    //NOTE: updating the product object, not product class
+  })
+);
+
 export default productRouter;

@@ -329,3 +329,8 @@ follow-along with Coding with Basir - mainly to learn how version control works
     3. create fields
     4. load product details
     5. add to routes
+
+39. Update Product
+    1. define update api
+    2. define product update constant, action and reducer
+    3. use action in Product Edit Screen
