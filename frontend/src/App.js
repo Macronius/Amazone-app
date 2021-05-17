@@ -7,6 +7,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import CartScreen from "./screens/CartScreen";
 import HomeScreen from "./screens/HomeScreen";
 import OrderHistoryScreen from "./screens/OrderHistoryScreen";
+import OrderListScreen from "./screens/OrderListScreen";
 import OrderScreen from "./screens/OrderScreen";
 import PaymentMethodScreen from "./screens/PaymentMethodScreen";
 import PlaceOrderScreen from "./screens/PlaceOrderScreen";
@@ -118,6 +119,10 @@ function App() {
             path="/productlist"
             component={ProductListScreen}
           ></AdminRoute>
+          <AdminRoute
+            path="/orderlist"
+            component={OrderListScreen}
+          ></AdminRoute>
           {/* NOTE: id is optional because user could go straight to cart directly, not through an item by adding item to cart */}
         </main>
 
@@ -128,3 +133,6 @@ function App() {
 }
 
 export default App;
+
+//QUESTION: is this where I make up the route path names or does it happen somewhere else individually?
+//QUANSWER: yes, because the path is defined/associated with the component screen

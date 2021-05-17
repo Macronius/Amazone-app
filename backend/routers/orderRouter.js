@@ -1,9 +1,26 @@
 import express from "express";
 import expressAsyncHandler from "express-async-handler";
 import Order from "../models/orderModel.js";
-import { isAuth } from "../utils.js";
+import { isAdmin, isAuth } from "../utils.js";
 
 const orderRouter = express.Router();
+
+//api to create list of orders
+orderRouter.get(
+  "/",
+  isAuth,
+  isAdmin,
+  expressAsyncHandler(async (req, res) => {
+    const orders = await Order.find({}).populate("user", "name"); //see import Order from orderModel.js
+    res.send(orders);
+  })
+);
+//QUESTION: what does populate() method do?
+    //A: in orderModel.js, because there is a 'user' field, where the 'type' of field is 'ObjectId and its reference is 'User', by having having .populate('user', 'name'), you find the id of user and load the user information from user table or user collection and only put the name of user from that collection.
+    //A: its like 'join' in sql
+//QUESTION: where does populate() method come from?
+
+
 
 orderRouter.get(
   "/mine",
@@ -88,3 +105,5 @@ orderRouter.put(
 export default orderRouter;
 
 //NOTE: by calling next() function inside isAuth, req.user will be filled by user information
+
+//NOTE: the last entry of a request is called the 'handler'

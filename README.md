@@ -346,3 +346,9 @@ follow-along with Coding with Basir - mainly to learn how version control works
     2. create delete constants, action and reducer
     3. use it in product list screen
     (as admin, delete product, get are you sure, delete from homepage, product list)
+
+42. List Orders (orders placed by customers)
+    1. create order list api
+    2. create OrderList screen
+    3. add reducer to store
+    4. show products on the screen

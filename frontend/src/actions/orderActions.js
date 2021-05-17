@@ -13,6 +13,9 @@ import {
   ORDER_MINE_LIST_REQUEST,
   ORDER_MINE_LIST_SUCCESS,
   ORDER_MINE_LIST_FAIL,
+  ORDER_LIST_REQUEST,
+  ORDER_LIST_SUCCESS,
+  ORDER_LIST_FAIL,
 } from "../constants/orderConstants";
 
 //accept order as a parameter, save order in database, and return an async functiont htat accepts dispatch and getState and returns the function, where dispatch and getState will be filled? by redux-thunk
@@ -63,29 +66,31 @@ export const detailsOrder = (orderId) => async (dispatch, getState) => {
   }
 };
 
-export const payOrder = (order, paymentResult) => async (
-  dispatch,
-  getState
-) => {
-  dispatch({ type: ORDER_PAY_REQUEST, payload: { order, paymentResult } });
-  const {
-    userSignin: { userInfo },
-  } = getState();
+export const payOrder =
+  (order, paymentResult) => async (dispatch, getState) => {
+    dispatch({ type: ORDER_PAY_REQUEST, payload: { order, paymentResult } });
+    const {
+      userSignin: { userInfo },
+    } = getState();
 
-  //send ajax request
-  try {
-    const { data } = Axios.put(`/api/orders/${order._id}/pay`, paymentResult, {
-      headers: { Authorization: `Bearer ${userInfo.token}` },
-    }); // .put() because calling the pay api and that type of api is 'put'
-    dispatch({ type: ORDER_PAY_SUCCESS, payload: data });
-  } catch (error) {
-    const message =
-      error.response && error.response.data.message
-        ? error.response.data.message
-        : error.message;
-    dispatch({ type: ORDER_PAY_FAIL, payload: message });
-  }
-};
+    //send ajax request
+    try {
+      const { data } = Axios.put(
+        `/api/orders/${order._id}/pay`,
+        paymentResult,
+        {
+          headers: { Authorization: `Bearer ${userInfo.token}` },
+        }
+      ); // .put() because calling the pay api and that type of api is 'put'
+      dispatch({ type: ORDER_PAY_SUCCESS, payload: data });
+    } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      dispatch({ type: ORDER_PAY_FAIL, payload: message });
+    }
+  };
 
 export const listOrderMine = () => async (dispatch, getState) => {
   //dispatch ORDER_MINE_LIST_REQUEST request first
@@ -109,3 +114,24 @@ export const listOrderMine = () => async (dispatch, getState) => {
     dispatch({ type: ORDER_MINE_LIST_FAIL, payload: message });
   }
 };
+
+export const listOrders = () => async (dispatch, getState) => {
+  dispatch({ type: ORDER_LIST_REQUEST });
+  const {
+    userSignin: { userInfo },
+  } = getState();
+
+  try {
+    const { data } = await Axios.get("/api/orders", {
+      headers: { Authorization: `Bearer ${userInfo.token}` },
+    });
+    dispatch({type: ORDER_LIST_SUCCESS, payload: data});  //where 'data' is orders array from backend
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    dispatch({ type: ORDER_LIST_FAIL, payload: message });
+  }
+};
+//QUESTION: are 'isAuth' and 'isAdmin' not required because the request is being authorized through the header userInfo.token?
