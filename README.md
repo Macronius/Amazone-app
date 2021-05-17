@@ -340,3 +340,9 @@ follow-along with Coding with Basir - mainly to learn how version control works
     2. define uploadRouter.js
     3. create uploads folder
     4. Handle frontend (define constants, actions and reducers)
+
+41. Delete Product
+    1. create delete api in backend
+    2. create delete constants, action and reducer
+    3. use it in product list screen
+    (as admin, delete product, get are you sure, delete from homepage, product list)
