@@ -16,11 +16,9 @@ orderRouter.get(
   })
 );
 //QUESTION: what does populate() method do?
-    //A: in orderModel.js, because there is a 'user' field, where the 'type' of field is 'ObjectId and its reference is 'User', by having having .populate('user', 'name'), you find the id of user and load the user information from user table or user collection and only put the name of user from that collection.
-    //A: its like 'join' in sql
+//A: in orderModel.js, because there is a 'user' field, where the 'type' of field is 'ObjectId and its reference is 'User', by having having .populate('user', 'name'), you find the id of user and load the user information from user table or user collection and only put the name of user from that collection.
+//A: its like 'join' in sql
 //QUESTION: where does populate() method come from?
-
-
 
 orderRouter.get(
   "/mine",
@@ -96,6 +94,22 @@ orderRouter.put(
       };
       const updatedOrder = await order.save();
       res.send({ message: "Order Paid", order: updatedOrder }); //send to frontend
+    } else {
+      res.status(404).send({ message: "Order Not Found" });
+    }
+  })
+);
+
+//final path: /api/orders/:idoforderstobedeleted
+orderRouter.delete(
+  "/:id",
+  isAuth,
+  isAdmin,
+  expressAsyncHandler(async (req, res) => {
+    const order = await Order.findById(req.params.id); //where req.params.id is the value that user entered into the url (at this point) aka :id
+    if (order) {
+      const deletedOrder = await order.remove();
+      res.send({ message: "Order Deleted", order: deletedOrder });
     } else {
       res.status(404).send({ message: "Order Not Found" });
     }

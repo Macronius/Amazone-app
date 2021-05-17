@@ -16,6 +16,9 @@ import {
   ORDER_LIST_REQUEST,
   ORDER_LIST_SUCCESS,
   ORDER_LIST_FAIL,
+  ORDER_DELETE_REQUEST,
+  ORDER_DELETE_SUCCESS,
+  ORDER_DELETE_FAIL,
 } from "../constants/orderConstants";
 
 //accept order as a parameter, save order in database, and return an async functiont htat accepts dispatch and getState and returns the function, where dispatch and getState will be filled? by redux-thunk
@@ -125,7 +128,7 @@ export const listOrders = () => async (dispatch, getState) => {
     const { data } = await Axios.get("/api/orders", {
       headers: { Authorization: `Bearer ${userInfo.token}` },
     });
-    dispatch({type: ORDER_LIST_SUCCESS, payload: data});  //where 'data' is orders array from backend
+    dispatch({ type: ORDER_LIST_SUCCESS, payload: data }); //where 'data' is orders array from backend
   } catch (error) {
     const message =
       error.response && error.response.data.message
@@ -134,4 +137,26 @@ export const listOrders = () => async (dispatch, getState) => {
     dispatch({ type: ORDER_LIST_FAIL, payload: message });
   }
 };
+
+export const deleteOrder = (orderId) => async (dispatch, getState) => {
+  dispatch({ type: ORDER_DELETE_REQUEST, payload: orderId });
+  const {
+    userSignin: { userInfo },
+  } = getState();
+
+  try {
+    const { data } = await Axios.delete(`/api/orders/${orderId}`, {
+      headers: { Authorization: `Bearer ${userInfo.token}` },
+    });
+    dispatch({ type: ORDER_DELETE_SUCCESS, payload: data });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message //NOTE: data comes from orderRouter.js, message:" _____"
+        : error.message; //NOTE: if error has response, use message from response
+    dispatch({ type: ORDER_DELETE_FAIL, payload: message });
+  }
+};
 //QUESTION: are 'isAuth' and 'isAdmin' not required because the request is being authorized through the header userInfo.token?
+
+//QUESTION: when does error have a payload: message and when does it have error: message?  And could I call it spaceDooDooPistol if I wanted?

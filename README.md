@@ -308,22 +308,26 @@ follow-along with Coding with Basir - mainly to learn how version control works
     2. update user info
 
 35. Create Admin View
+
     1. create Admin menu
     2. create Admin middleware in backend
     3. create AdminRoute in frontend
 
 36. List Products for Admin
+
     1. Create Product List Screen
     2. Add reducer to store
     3. show products on the screen
 
 37. Create Product
+
     1. build create product api
     2. built Create Product button
     3. define product create constant, action and reducer
     4. use action in ProductListScreen
 
 38. Build Product Edit Screen
+
     1. create edit screen
     2. define state
     3. create fields
@@ -331,24 +335,33 @@ follow-along with Coding with Basir - mainly to learn how version control works
     5. add to routes
 
 39. Update Product
+
     1. define update api
     2. define product update constant, action and reducer
     3. use action in Product Edit Screen
 
 40. Upload Product Image
+
     1. npm install multer to manage upload file, download the package
     2. define uploadRouter.js
     3. create uploads folder
     4. Handle frontend (define constants, actions and reducers)
 
 41. Delete Product
+
     1. create delete api in backend
     2. create delete constants, action and reducer
     3. use it in product list screen
-    (as admin, delete product, get are you sure, delete from homepage, product list)
+       (as admin, delete product, get are you sure, delete from homepage, product list)
 
 42. List Orders (orders placed by customers)
+
     1. create order list api
     2. create OrderList screen
     3. add reducer to store
     4. show products on the screen
+
+43. Delete Order
+    1. create orderRouter.delete() api
+    2. create delete order action and reducer
+    3. add order delete action to order list
