@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import Axios from 'axios';
 import { detailsProduct, updateProduct } from "../actions/productActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
@@ -69,6 +70,30 @@ export default function PoductEditScreen(props) {
     );
   };
 
+  const [loadingUpload, setLoadingUpload] = useState(false);
+  const [errorUpload, setErrorUpload] = useState('');
+
+  const userSignin = useSelector( (state)=> state.userSignin );
+  const {userInfo} = userSignin;
+
+  const uploadFileHandler = async(e)=> {
+    const file = e.target.files[0];   //upload only the first selected file
+    const bodyFormData = new FormData();  //when you want to send an ajax request to upload a file you need to create an object from this class
+    bodyFormData.append('image', file);  //append file
+    setLoadingUpload(true);
+
+    try{
+      const {data} = await Axios.post('/api/uploads', bodyFormData, {
+        headers: {'Content-Type': 'multipart/form-data', Authorization: `Bearer ${userInfo.token}`}
+      }); //this allows the backend to understand and get and upload file to uploads folder
+      setImage(data);
+      setLoadingUpload(false);
+    }catch(error){
+      setErrorUpload(error.message);
+      setLoadingUpload(false);
+    }
+  }
+
   return (
     <div>
       <form className="form" onSubmit={submitHandler}>
@@ -113,6 +138,18 @@ export default function PoductEditScreen(props) {
                 onChange={(e) => setImage(e.target.value)}
               />
             </div>
+            <div>
+              <label htmlFor="imageFile">Image File</label>
+              <input
+                type="file"
+                id="imageFile"
+                label="Choose Image"
+                onChange={uploadFileHandler}
+              />
+              {loadingUpload && <LoadingBox></LoadingBox>}
+              {errorUpload && <MessageBox variant="danger">{error}</MessageBox>}
+            </div>
+
             <div>
               <label htmlFor="category">Category</label>
               <input

@@ -1,9 +1,11 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import path from "path"; //NOTE: 'path' is a built-in Node package
 import productRouter from "./routers/productRouter.js";
 import userRouter from "./routers/userRouter.js";
 import orderRouter from "./routers/orderRouter.js";
+import uploadRouter from "./routers/uploadRouter.js";
 
 //to read .env file in utils.js variable
 dotenv.config();
@@ -22,12 +24,17 @@ mongoose.connect(process.env.MONGODB_URL || "mongodb://localhost/amazona", {
   useCreateIndex: true,
 });
 
+app.use("/api/uploads", uploadRouter);
 app.use("/api/users", userRouter); //use userRouter and productRouter in server.js
 app.use("/api/products", productRouter);
 app.use("/api/orders", orderRouter); //responder is orderRouter
-app.get("/api/config/paypal", (req, res)=> {
-  res.send(process.env.PAYPAL_CLIENT_ID || 'sb');
+app.get("/api/config/paypal", (req, res) => {
+  res.send(process.env.PAYPAL_CLIENT_ID || "sb");
 });
+
+const __dirname = path.resolve(); //returns current folder, saved as __dirname, then used to concatenate the current folder to the upload folder
+app.use("/uploads", express.static(path.join(__dirname, "/uploads"))); //add a new line to show the images that upload to the uploads folder
+
 app.get("/", (req, res) => {
   res.send("Server is ready"); //define the first route, the root of backend responds "server is ready"
 });

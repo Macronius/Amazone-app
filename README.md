@@ -334,3 +334,9 @@ follow-along with Coding with Basir - mainly to learn how version control works
     1. define update api
     2. define product update constant, action and reducer
     3. use action in Product Edit Screen
+
+40. Upload Product Image
+    1. npm install multer to manage upload file, download the package
+    2. define uploadRouter.js
+    3. create uploads folder
+    4. Handle frontend (define constants, actions and reducers)
