@@ -35,9 +35,15 @@ app.get("/api/config/paypal", (req, res) => {
 const __dirname = path.resolve(); //returns current folder, saved as __dirname, then used to concatenate the current folder to the upload folder
 app.use("/uploads", express.static(path.join(__dirname, "/uploads"))); //add a new line to show the images that upload to the uploads folder
 
-app.get("/", (req, res) => {
-  res.send("Server is ready"); //define the first route, the root of backend responds "server is ready"
-});
+app.use(express.static(path.join(__dirname, "/frontend/build")));  //serve file inside build folder
+app.get("*", (req, res) =>
+  res.sendFile(path.join(__dirname, "/frontend/build/index.html"))
+);  //serve all addresses by index.html
+
+//therefore, no need for the following three lines of vode
+// app.get("/", (req, res) => {
+//   res.send("Server is ready"); //define the first route, the root of backend responds "server is ready"
+// });
 
 app.use((err, req, res, next) => {
   res.status(500).send({ message: err.message }); //error-catching middleware, works with expressAsyncHandler
