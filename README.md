@@ -369,3 +369,15 @@ follow-along with Coding with Basir - mainly to learn how version control works
 44. Deliver Order(process order details individually as an admin)
     1. create constants, actions and reducers for deliver order
     2. add order deliver action to order details screen
+
+45. Publish to Heroku
+    1. Create git repository
+    2. Create heroku account
+    3. install Heroku CLI
+    4. heroku login
+    5. heroku apps:create <yourname>amazone
+    6. Edit package.json for build script
+    10. Create Profile
+    12. Create mongodb atlas database
+    19. Set database connection in heroku env variables
+    20. Commit and push
