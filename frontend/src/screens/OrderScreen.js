@@ -4,9 +4,12 @@ import { Link } from "react-router-dom";
 import Axios from "axios";
 import MessageBox from "../components/MessageBox";
 import LoadingBox from "../components/LoadingBox";
-import { detailsOrder, payOrder } from "../actions/orderActions";
+import { deliverOrder, detailsOrder, payOrder } from "../actions/orderActions";
 import { PayPalButton } from "react-paypal-button-v2";
-import { ORDER_PAY_RESET } from "../constants/orderConstants";
+import {
+  ORDER_DELIVER_RESET,
+  ORDER_PAY_RESET,
+} from "../constants/orderConstants";
 
 export default function OrderScreen(props) {
   const orderId = props.match.params.id; //NOTE: this is where the arguument comes from to call the
@@ -22,6 +25,17 @@ export default function OrderScreen(props) {
     error: errorPay,
     success: successPay,
   } = orderPay;
+
+  //get the result from redux store when deliverOrder happens
+  const orderDeliver = useSelector((state) => state.orderDeliver);
+  const {
+    loading: loadingDeliver,
+    error: errorDeliver,
+    success: successDeliver,
+  } = orderDeliver;
+
+  const userSignin = useSelector((state) => state.userSignin);
+  const { userInfo } = userSignin;
 
   const dispatch = useDispatch();
 
@@ -39,9 +53,15 @@ export default function OrderScreen(props) {
       document.body.appendChild(script);
     };
     //call the addPayPalScript
-    if (!order || successPay || (order && order._id !== orderId)) {
+    if (
+      !order ||
+      successPay ||
+      successDeliver ||
+      (order && order._id !== orderId)
+    ) {
       //NOTE: orderId is from , need update page based on new order
-      dispatch({type: ORDER_PAY_RESET});
+      dispatch({ type: ORDER_PAY_RESET });
+      dispatch({ type: ORDER_DELIVER_RESET });
       dispatch(detailsOrder(orderId)); //orderId comes from the URL; NOTE: by running dispatch, causes rerender activates useEffect again
     } else {
       if (!order.isPaid) {
@@ -52,10 +72,14 @@ export default function OrderScreen(props) {
         }
       }
     }
-  }, [dispatch, order, orderId, sdkReady, successPay]);
+  }, [dispatch, order, orderId, sdkReady, successPay, successDeliver]);
 
   const successPaymentHandler = (paymentResult) => {
     dispatch(payOrder(order, paymentResult)); //paymentResult comes from orderModel.js
+  };
+
+  const deliverHandler = () => {
+    dispatch(deliverOrder(order._id));
   };
 
   return loading ? (
@@ -188,6 +212,21 @@ export default function OrderScreen(props) {
                       ></PayPalButton>
                     </>
                   )}
+                </li>
+              )}
+              {userInfo.isAdmin && order.isPaid && !order.isDelivered && (
+                <li>
+                  {loadingDeliver && <LoadingBox></LoadingBox>}
+                  {errorDeliver && (
+                    <MessageBox variant="danger">{errorDeliver}</MessageBox>
+                  )}
+                  <button
+                    type="button"
+                    className="primary block"
+                    onClick={deliverHandler}
+                  >
+                    Deliver Order
+                  </button>
                 </li>
               )}
             </ul>

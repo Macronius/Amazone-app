@@ -19,6 +19,9 @@ import {
   ORDER_DELETE_REQUEST,
   ORDER_DELETE_SUCCESS,
   ORDER_DELETE_FAIL,
+  ORDER_DELIVER_REQUEST,
+  ORDER_DELIVER_SUCCESS,
+  ORDER_DELIVER_FAIL,
 } from "../constants/orderConstants";
 
 //accept order as a parameter, save order in database, and return an async functiont htat accepts dispatch and getState and returns the function, where dispatch and getState will be filled? by redux-thunk
@@ -155,6 +158,27 @@ export const deleteOrder = (orderId) => async (dispatch, getState) => {
         ? error.response.data.message //NOTE: data comes from orderRouter.js, message:" _____"
         : error.message; //NOTE: if error has response, use message from response
     dispatch({ type: ORDER_DELETE_FAIL, payload: message });
+  }
+};
+
+export const deliverOrder = (orderId) => async (dispatch, getState) => {
+  dispatch({ type: ORDER_DELIVER_REQUEST, payload: orderId });
+  const {
+    userSignin: { userInfo },
+  } = getState();
+
+  //send ajax request
+  try {
+    const { data } = Axios.put(`/api/orders/${orderId}/deliver`, {}, {
+      headers: { Authorization: `Bearer ${userInfo.token}` },
+    }); // .put() because calling the pay api and that type of api is 'put'
+    dispatch({ type: ORDER_DELIVER_SUCCESS, payload: data });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    dispatch({ type: ORDER_DELIVER_FAIL, payload: message });
   }
 };
 //QUESTION: are 'isAuth' and 'isAdmin' not required because the request is being authorized through the header userInfo.token?

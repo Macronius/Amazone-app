@@ -116,6 +116,25 @@ orderRouter.delete(
   })
 );
 
+orderRouter.put(
+  "/:id/deliver",
+  isAuth,
+  isAdmin,
+  expressAsyncHandler(async (req, res) => {
+    const order = await Order.findById(req.params.id); //QUESTION: in the orderModel, there is no parameter called id... what is this refering to?
+    if (order) {
+      //if order is exists, update the order
+      order.isDelivered = true;
+      order.deliveredAt = Date.now();
+      
+      const updatedOrder = await order.save();
+      res.send({ message: "Order Delivered", order: updatedOrder }); //send to frontend
+    } else {
+      res.status(404).send({ message: "Order Not Found" });
+    }
+  })
+);
+
 export default orderRouter;
 
 //NOTE: by calling next() function inside isAuth, req.user will be filled by user information

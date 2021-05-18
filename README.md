@@ -365,3 +365,7 @@ follow-along with Coding with Basir - mainly to learn how version control works
     1. create orderRouter.delete() api
     2. create delete order action and reducer
     3. add order delete action to order list
+
+44. Deliver Order(process order details individually as an admin)
+    1. create constants, actions and reducers for deliver order
+    2. add order deliver action to order details screen
