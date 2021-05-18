@@ -117,7 +117,7 @@ export const deleteProduct = (productId) => async (dispatch, getState) => {
     const { data } = await Axios.delete(`/api/products/${productId}`, {
       headers: { Authorization: `Bearer ${userInfo.token}` },
     }); //QUESTION: what is data for?
-    dispatch({ type: PRODUCT_DELETE_SUCCESS });
+    dispatch({ type: PRODUCT_DELETE_SUCCESS, payload: data });
   } catch (error) {
     const message =
       error.response && error.response.data.message

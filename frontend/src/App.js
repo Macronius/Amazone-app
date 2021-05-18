@@ -18,6 +18,7 @@ import ProfileScreen from "./screens/ProfileScreen";
 import RegisterScreen from "./screens/RegisterScreen";
 import ShippingAddressScreen from "./screens/ShippingAddressScreen";
 import SigninScreen from "./screens/SigninScreen";
+import UserListScreen from "./screens/UserListScreen";
 
 function App() {
   const cart = useSelector((state) => state.cart);
@@ -123,6 +124,7 @@ function App() {
             path="/orderlist"
             component={OrderListScreen}
           ></AdminRoute>
+          <AdminRoute path="/userlist" component={UserListScreen}></AdminRoute>
           {/* NOTE: id is optional because user could go straight to cart directly, not through an item by adding item to cart */}
         </main>
 

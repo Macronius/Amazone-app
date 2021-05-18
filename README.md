@@ -381,3 +381,8 @@ follow-along with Coding with Basir - mainly to learn how version control works
     12. Create mongodb atlas database
     19. Set database connection in heroku env variables
     20. Commit and push
+
+46. List Users
+    1. build api for list users
+    2. Create UserListScreen
+    3. create order details constants, actions and reducers

@@ -13,6 +13,9 @@ import {
   USER_UPDATE_PROFILE_REQUEST,
   USER_UPDATE_PROFILE_SUCCESS,
   USER_UPDATE_PROFILE_RESET,
+  USER_LIST_REQUEST,
+  USER_LIST_SUCCESS,
+  USER_LIST_FAIL,
 } from "../constants/userConstants";
 
 export const userSigninReducer = (state = {}, action) => {
@@ -70,6 +73,21 @@ export const userUpdateProfileReducer = (state = {}, action) => {
       return state;
   }
 };
+
+export const userListReducer = (state={}, action)=> {
+  switch(action.type){
+    case USER_LIST_REQUEST:
+      return {loading: true};
+    case USER_LIST_SUCCESS:
+      return { loading: false, users: action.payload };
+    case USER_LIST_FAIL:
+      return {loading: false, error: action.payload};
+    default:
+      return state;
+  }
+};
+//QUESTION: instead of switch(action.type), could I also compare action.payload?
+
 //NOTE: initial state loading: true because when page first loads, it loads this info
 //QUESTION: what is the difference between USER_UPDATE_PROFILE_RESET return empty object and default return state?
 
