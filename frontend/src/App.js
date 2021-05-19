@@ -4,6 +4,7 @@ import { BrowserRouter, Link, Route } from "react-router-dom";
 import { signout } from "./actions/userActions";
 import AdminRoute from "./components/AdminRoute";
 import PrivateRoute from "./components/PrivateRoute";
+import { userDeleteReducer } from "./reducers/userReducers";
 import CartScreen from "./screens/CartScreen";
 import HomeScreen from "./screens/HomeScreen";
 import OrderHistoryScreen from "./screens/OrderHistoryScreen";
@@ -125,6 +126,10 @@ function App() {
             component={OrderListScreen}
           ></AdminRoute>
           <AdminRoute path="/userlist" component={UserListScreen}></AdminRoute>
+          <AdminRoute
+            path="/userdelete"
+            component={userDeleteReducer}
+          ></AdminRoute>
           {/* NOTE: id is optional because user could go straight to cart directly, not through an item by adding item to cart */}
         </main>
 

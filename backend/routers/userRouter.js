@@ -124,6 +124,26 @@ userRouter.get(
 
 //NOTE: it seems the function of this is to repost the entire contents of the user profile every time update, either re-write or over-write
 
+//api for Admin delete users from UserListScreen
+userRouter.delete(
+  "/:id",
+  isAuth,
+  isAdmin,
+  expressAsyncHandler(async (req, res) => {
+    const user = await User.findById(req.params.id);
+    if (user) {
+      if (user.isAdmin === true) {
+        res.status(400).send({ message: "Cannot Delete Admin User" });
+        return;
+      }
+      const deleteUser = await user.remove();
+      res.send({ message: "User Deleted Successfully", user: deleteUser });
+    } else {
+      res.status(404).send({ message: "User Not Found" });
+    }
+  })
+);
+
 export default userRouter;
 
 //use express.router to create a user router

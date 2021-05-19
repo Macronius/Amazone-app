@@ -16,6 +16,10 @@ import {
   USER_LIST_REQUEST,
   USER_LIST_SUCCESS,
   USER_LIST_FAIL,
+  USER_DELETE_REQUEST,
+  USER_DELETE_SUCCESS,
+  USER_DELETE_FAIL,
+  USER_DELETE_RESET,
 } from "../constants/userConstants";
 
 export const userSigninReducer = (state = {}, action) => {
@@ -74,19 +78,33 @@ export const userUpdateProfileReducer = (state = {}, action) => {
   }
 };
 
-export const userListReducer = (state={}, action)=> {
-  switch(action.type){
+export const userListReducer = (state = { loading: true }, action) => {
+  switch (action.type) {
     case USER_LIST_REQUEST:
-      return {loading: true};
+      return { loading: true };
     case USER_LIST_SUCCESS:
       return { loading: false, users: action.payload };
     case USER_LIST_FAIL:
-      return {loading: false, error: action.payload};
+      return { loading: false, error: action.payload };
     default:
       return state;
   }
 };
-//QUESTION: instead of switch(action.type), could I also compare action.payload?
+
+export const userDeleteReducer = (state = {}, action) => {
+  switch (action.type) {
+    case USER_DELETE_REQUEST:
+      return { loading: true };
+    case USER_DELETE_SUCCESS:
+      return { loading: false, success: true };
+    case USER_DELETE_FAIL:
+      return { loading: false, error: action.payload };
+    case USER_DELETE_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
 
 //NOTE: initial state loading: true because when page first loads, it loads this info
 //QUESTION: what is the difference between USER_UPDATE_PROFILE_RESET return empty object and default return state?
