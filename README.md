@@ -391,3 +391,7 @@ follow-along with Coding with Basir - mainly to learn how version control works
     1. build api for delete users
     2. create order details constants, actions and reducer
     3. Use action in UserListScreen
+
+48. Edit User
+    1. build api for update users
+    2. create edit screen UI

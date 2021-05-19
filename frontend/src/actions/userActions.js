@@ -20,6 +20,9 @@ import {
   USER_DELETE_REQUEST,
   USER_DELETE_SUCCESS,
   USER_DELETE_FAIL,
+  USER_UPDATE_SUCCESS,
+  USER_UPDATE_FAIL,
+  USER_UPDATE_REQUEST,
 } from "../constants/userConstants";
 
 export const register = (name, email, password) => async (dispatch) => {
@@ -118,6 +121,30 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
     dispatch({ type: USER_UPDATE_PROFILE_FAIL, payload: message });
   }
 }; //QUESTION: why does the catch dispatch payload: message rather than error: message?
+
+export const updateUser = (user) => async (dispatch, getState) => {
+  //dispatch({ type: USER_UPDATE_PROFILE_REQUEST, payload: user });   //DEBUG - this line is probably wrong, see below
+  dispatch({ type: USER_UPDATE_REQUEST, payload: user });
+
+  //get user info
+  const {
+    userSignin: { userInfo },
+  } = getState();
+
+  try {
+    const { data } = await Axios.put(`/api/users/${user._id}`, user, {
+      headers: { Authorization: `Bearer ${userInfo.token}` },
+    }); //NOTE: switched from path /api/users/profile (current user) to ${user._id}
+    dispatch({ type: USER_UPDATE_SUCCESS, payload: data });
+    localStorage.setItem("userInfo", JSON.stringify(data)); //local storage must also reflect user profile update
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    dispatch({ type: USER_UPDATE_FAIL, payload: message });
+  }
+}; 
 
 export const listUsers = () => async (dispatch, getState) => {
   dispatch({ type: USER_LIST_REQUEST });
