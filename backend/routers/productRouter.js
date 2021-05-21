@@ -2,7 +2,7 @@ import express from "express";
 import expressAsyncHandler from "express-async-handler";
 import data from "../data.js";
 import Product from "../models/productModel.js";
-import { isAuth, isAdmin } from "../utils.js";
+import { isAuth, isAdmin, isSellerOrAdmin } from "../utils.js";
 
 const productRouter = express.Router();
 
@@ -10,7 +10,11 @@ const productRouter = express.Router();
 productRouter.get(
   "/",
   expressAsyncHandler(async (req, res) => {
-    const products = await Product.find({}); //.find({}) returns entire object (or all products (in this case))
+    //filter products only for sellers
+    const seller = req.query.seller || "";
+    const sellerFilter = seller ? {seller} : {};
+    const products = await Product.find({ ...sellerFilter }); //.find({}) returns entire object (or all products (in this case))
+    //NOTE: spread operator to deconstruct this and only put the field of seller, not the object
     res.send(products);
   })
 );
@@ -42,10 +46,11 @@ productRouter.get(
 productRouter.post(
   "/",
   isAuth,
-  isAdmin,
+  isSellerOrAdmin,
   expressAsyncHandler(async (req, res) => {
     const product = new Product({
       name: "sample name" + Date.now(),
+      seller: req.user._id, //seller id to be filled by current user
       image: "/images/p1.jpg",
       price: 0,
       category: "sample category",
@@ -64,7 +69,7 @@ productRouter.post(
 productRouter.put(
   "/:id",
   isAuth,
-  isAdmin,
+  isSellerOrAdmin,
   expressAsyncHandler(async (req, res) => {
     const productId = req.params.id;
     const product = await Product.findById(productId); //QUESTION: what exactly is 'Product' ?

@@ -33,6 +33,7 @@ userRouter.post(
           name: user.name,
           email: user.email,
           isAdmin: user.isAdmin,
+          isSeller: user.isSeller,
           token: generateToken(user),
         });
         return;
@@ -57,6 +58,7 @@ userRouter.post(
       name: createdUser.name,
       email: createdUser.email,
       isAdmin: createdUser.isAdmin,
+      isSeller: user.isSeller,
       token: generateToken(createdUser),
     });
   })
@@ -90,6 +92,11 @@ userRouter.put(
       //update user information
       user.name = req.body.name || user.name; //if name from ProfileScreen exists, then use it, else use existing name
       user.email = req.body.email || user.email;
+      if(user.isSeller){
+        user.seller.name = req.body.sellerName || user.seller.name;
+        user.seller.logo = req.body.sellerLogo || user.seller.logo;
+        user.seller.description = req.body.sellerdescription || user.seller.description;
+      }
       if (req.body.password) {
         //take extra step to encrypt the password
         user.password = bcrypt.hashSync(req.body.password, 8); //8 generates the auto-salt
@@ -103,6 +110,7 @@ userRouter.put(
         name: updatedUser.name,
         email: updatedUser.email,
         isAdmin: updatedUser.isAdmin,
+        isSeller: user.isSeller,
         token: generateToken(updatedUser),
       });
     }

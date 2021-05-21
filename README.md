@@ -395,3 +395,13 @@ follow-along with Coding with Basir - mainly to learn how version control works
 48. Edit User
     1. build api for update users
     2. create edit screen UI
+
+
+49. Implement Seller View
+    1. add seller menu
+    2. create seller route
+    3. define a 'seller' userModel
+    4. create form for seller to enter seller data in ProfileScreen
+    5. update ProductListScreen to serve seller view, list products for seller
+    6. update OrderListScreen to serve seller view, list orders for seller
+    7. add Seller to ProductListScreen and DetailsScreen
