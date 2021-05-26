@@ -405,3 +405,7 @@ follow-along with Coding with Basir - mainly to learn how version control works
     5. update ProductListScreen to serve seller view, list products for seller
     6. update OrderListScreen to serve seller view, list orders for seller
     7. add Seller to ProductListScreen and DetailsScreen
+
+50. Create Seller Page and Carousel
+    1. create seller page
+    2. create seller carousel
