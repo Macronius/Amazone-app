@@ -406,6 +406,11 @@ follow-along with Coding with Basir - mainly to learn how version control works
     6. update OrderListScreen to serve seller view, list orders for seller
     7. add Seller to ProductListScreen and DetailsScreen
 
-50. Create Seller Page and Carousel
+50. Create Seller Page
     1. create seller page
     2. create seller carousel
+
+51. Add Top Seller Carousel
+    1. install react carousel
+    2. implement actions and reducers for top sellers
+    3. use react carousel with data in Home Screen

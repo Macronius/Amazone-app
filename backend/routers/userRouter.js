@@ -7,6 +7,17 @@ import { generateToken, isAdmin, isAuth } from "../utils.js";
 
 const userRouter = express.Router();
 
+//api to return list of top-sellers
+userRouter.get(
+  "/top-sellers",
+  expressAsyncHandler(async (req, res) => {
+    const topSellers = await User.find({ isSeller: true })
+      .sort({ "seller.rating": -1 })
+      .limit(3);
+    res.send(topSellers);
+  })
+);
+
 //define a get method for seed API
 userRouter.get(
   "/seed",
@@ -14,7 +25,7 @@ userRouter.get(
     //to remove all users before creating new users, go to userRouter
     // await.User.remove({});
     const createdUsers = await User.insertMany(data.users);
-    res.send({ createdUsers });
+    res.send({ createdUsers }); //QUESTION: why is createdUsers in braces?
   })
 );
 
@@ -92,10 +103,11 @@ userRouter.put(
       //update user information
       user.name = req.body.name || user.name; //if name from ProfileScreen exists, then use it, else use existing name
       user.email = req.body.email || user.email;
-      if(user.isSeller){
+      if (user.isSeller) {
         user.seller.name = req.body.sellerName || user.seller.name;
         user.seller.logo = req.body.sellerLogo || user.seller.logo;
-        user.seller.description = req.body.sellerdescription || user.seller.description;
+        user.seller.description =
+          req.body.sellerdescription || user.seller.description;
       }
       if (req.body.password) {
         //take extra step to encrypt the password
