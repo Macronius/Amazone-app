@@ -13,8 +13,8 @@ export default function CartScreen(props) {
   //note: the variable 'props.location.search' returns the value after ? in props.history.push(`/cart/${productId}?qty={qty}`); from ProductScreen.js
 
   //get cart from the redux store using useSelector
-  const cart = useSelector((state) => state.cart);
-  const { cartItems } = cart;
+  const cart = useSelector((state) => state.cart); //NOTE: error for error message comes from here
+  const { cartItems, error } = cart;
 
   //todo: check if productId exists, call addToCart action to add this product to the cart; because do only once, use useEffect
   const dispatch = useDispatch();
@@ -40,6 +40,7 @@ export default function CartScreen(props) {
     <div className="row top">
       <div className="col-2">
         <h1>Shopping Cart</h1>
+        {error && (<MessageBox variant="danger">{error}</MessageBox>)}
         {cartItems.length === 0 ? (
           <MessageBox>
             Cart is empty. <Link to="/">Go Shopping</Link>

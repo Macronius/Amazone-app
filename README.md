@@ -414,3 +414,6 @@ follow-along with Coding with Basir - mainly to learn how version control works
     1. install react carousel
     2. implement actions and reducers for top sellers
     3. use react carousel with data in Home Screen
+
+52. Force Order Items From One Seller
+    1. update addToCart action to buy from one seller at a time per order
