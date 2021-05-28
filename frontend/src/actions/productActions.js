@@ -18,14 +18,14 @@ import {
   PRODUCT_DELETE_SUCCESS,
 } from "../constants/productConstants";
 
-export const listProducts = ({seller=''}) => async (dispatch) => {
+export const listProducts = ({seller='', name=''}) => async (dispatch) => {
   //NOTE: default value of seller is empty string, but
 
   dispatch({ type: PRODUCT_LIST_REQUEST }); //NOTE: no payload
 
   //fetch data from backend wrapped in try/catch
   try {
-    const { data } = await Axios.get(`/api/products?seller=${seller}`); //QUESTION: where did api/ come from?
+    const { data } = await Axios.get(`/api/products?seller=${seller}&name=${name}`); //QUESTION: where did api/ come from?
     dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data }); //by dispatching action, we change the state of redux and based on that we can update the homescreen and show products
   } catch (error) {
     dispatch({ type: PRODUCT_LIST_FAIL, payload: error.message });

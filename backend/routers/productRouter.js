@@ -11,12 +11,14 @@ productRouter.get(
   "/",
   expressAsyncHandler(async (req, res) => {
     //filter products only for sellers
+    const name = req.query.name || "";
     const seller = req.query.seller || "";
+    const nameFilter = name ? { name: { $regex: name, $options: "i" } } : {};
     const sellerFilter = seller ? { seller } : {};
-    const products = await Product.find({ ...sellerFilter }).populate(
-      "seller",
-      "seller.name seller.logo"
-    ); //.find({}) returns entire object (or all products (in this case))
+    const products = await Product.find({
+      ...nameFilter,
+      ...sellerFilter,
+    }).populate("seller", "seller.name seller.logo"); //.find({}) returns entire object (or all products (in this case))
     //NOTE: spread operator to deconstruct this and only put the field of seller, not the object
     res.send(products);
   })
@@ -36,7 +38,10 @@ productRouter.get(
 productRouter.get(
   "/:id",
   expressAsyncHandler(async (req, res) => {
-    const product = await Product.findById(req.params.id).populate('seller', 'seller.name seller.logo seller.rating seller.numReviews');
+    const product = await Product.findById(req.params.id).populate(
+      "seller",
+      "seller.name seller.logo seller.rating seller.numReviews"
+    );
     if (product) {
       res.send(product);
     } else {
