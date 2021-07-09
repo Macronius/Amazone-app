@@ -16,24 +16,42 @@ import {
   PRODUCT_DELETE_REQUEST,
   PRODUCT_DELETE_FAIL,
   PRODUCT_DELETE_SUCCESS,
+  PRODUCT_CATEGORY_LIST_REQUEST,
+  PRODUCT_CATEGORY_LIST_SUCCESS,
+  PRODUCT_CATEGORY_LIST_FAIL,
 } from "../constants/productConstants";
 
-export const listProducts = ({seller='', name=''}) => async (dispatch) => {
-  //NOTE: default value of seller is empty string, but
+export const listProducts =
+  ({ seller = "", name = "", category = "" }) =>
+  async (dispatch) => {
+    //NOTE: default value of seller is empty string, but
 
-  dispatch({ type: PRODUCT_LIST_REQUEST }); //NOTE: no payload
+    dispatch({ type: PRODUCT_LIST_REQUEST }); //NOTE: no payload
 
-  //fetch data from backend wrapped in try/catch
-  try {
-    const { data } = await Axios.get(`/api/products?seller=${seller}&name=${name}`); //QUESTION: where did api/ come from?
-    dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data }); //by dispatching action, we change the state of redux and based on that we can update the homescreen and show products
-  } catch (error) {
-    dispatch({ type: PRODUCT_LIST_FAIL, payload: error.message });
-  }
-};
+    //fetch data from backend wrapped in try/catch
+    try {
+      const { data } = await Axios.get(
+        `/api/products?seller=${seller}&name=${name}&category=${category}`
+      ); //QUESTION: where did api/ come from?
+      dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data }); //by dispatching action, we change the state of redux and based on that we can update the homescreen and show products
+    } catch (error) {
+      dispatch({ type: PRODUCT_LIST_FAIL, payload: error.message });
+    }
+  };
 //NOTES:
 //HERE we implimented the listProducts action and its actions: PRODUCT_LIST_REQUEST, PRODUCT_LIST_SUCCESS, PRODUCT_LIST_FAIL
 //NEXT we need to create the product reducer to respond to the actions created here
+
+export const listProductCategories = () => async (dispatch) => {
+  dispatch({ type: PRODUCT_CATEGORY_LIST_REQUEST, });
+
+  try {
+    const { data } = await Axios.get("/api/products/categories");
+    dispatch({ type: PRODUCT_CATEGORY_LIST_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({ type: PRODUCT_CATEGORY_LIST_FAIL, payload: error.message });
+  }
+};
 
 //step 13  PRODUCT DETAILS:
 //get product by its ID from backend and update redux store based on it

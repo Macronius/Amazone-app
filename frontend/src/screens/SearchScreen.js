@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router";
+import { Link, useParams } from "react-router-dom";
 import { listProducts } from "../actions/productActions";
 import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
@@ -9,18 +9,37 @@ import Product from "../components/Product";
 export default function SearchScreen(props) {
   const dispatch = useDispatch();
 
-  const { name = "all" } = useParams();
+  const { name = "all", category = "all" } = useParams();
 
   const productList = useSelector((state) => state.productList);
   const { loading, products, error } = productList;
 
+  const productCategoryList = useSelector((state) => state.productCategoryList);
+  const {
+    loading: loadingCategories,
+    error: errorCategories,
+    categories,
+  } = productCategoryList;
+
   useEffect(() => {
-    dispatch(listProducts({ name: name !== "all" ? name : "" }));
-  }, [dispatch, name]);
+    dispatch(
+      listProducts({
+        name: name !== "all" ? name : "",
+        category: category !== "all" ? category : "",
+      })
+    );
+  }, [category, dispatch, name]);
+
+  const getFilterUrl = (filter) => {
+    const filterCategory = filter.category || category;
+    const filterName = filter.name || name;
+    return `/search/category/${filterCategory}/name/${filterName}`; //generate url path
+  }; //QUESTION: how exactly does this work?
+  //QUESTION: if 'category' and 'name' come from useParams(), then how exactly is getFilterUrl connected to those 'params' ?
 
   return (
     <div>
-      <div className="row top">
+      <div className="row">
         {loading ? (
           <LoadingBox></LoadingBox>
         ) : error ? (
@@ -29,29 +48,46 @@ export default function SearchScreen(props) {
           <div>{products.length} Results</div>
         )}
       </div>
-      <div className="col-1">
-        <h3>Department</h3>
-        <ul>
-          <li>Category 1</li>
-        </ul>
-      </div>
-      <div className="col-3">
-        {loading ? (
-          <LoadingBox></LoadingBox>
-        ) : error ? (
-          <MessageBox variant="danger">{error}</MessageBox>
-        ) : (
-          <>
-            {products.length === 0 && (
-              <MessageBox>No Products Found</MessageBox>
-            )}
-            <div className="row center">
-              {products.map((product) => (
-                <Product key={product._id} product={product}></Product>
+      <div className="row top">
+        <div className="col-1">
+          <h3>Department</h3>
+          {loadingCategories ? (
+            <LoadingBox></LoadingBox>
+          ) : errorCategories ? (
+            <MessageBox variant="danger">{errorCategories}</MessageBox>
+          ) : (
+            <ul>
+              {categories.map((c) => (
+                <li key={c}>
+                  <Link
+                    className={c === category ? "active" : ""}
+                    to={getFilterUrl({ category: c })}
+                  >
+                    {c}
+                  </Link>
+                </li>
               ))}
-            </div>
-          </>
-        )}
+            </ul>
+          )}
+        </div>
+        <div className="col-3">
+          {loading ? (
+            <LoadingBox></LoadingBox>
+          ) : error ? (
+            <MessageBox variant="danger">{error}</MessageBox>
+          ) : (
+            <>
+              {products.length === 0 && (
+                <MessageBox>No Products Found</MessageBox>
+              )}
+              <div className="row center">
+                {products.map((product) => (
+                  <Product key={product._id} product={product}></Product>
+                ))}
+              </div>
+            </>
+          )}
+        </div>
       </div>
     </div>
   );

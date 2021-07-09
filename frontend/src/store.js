@@ -4,6 +4,7 @@ import thunk from "redux-thunk";
 import { cartReducer } from "./reducers/cartReducers";
 
 import {
+  productCategoryListReducer,
   productCreateReducer,
   productDeleteReducer,
   productDetailsReducer,
@@ -71,6 +72,7 @@ const reducer = combineReducers({
   userList: userListReducer,
   userDelete: userDeleteReducer,
   userTopSellersList: userTopSellerListReducer,
+  productCategoryList: productCategoryListReducer,
 });
 //1st store argument: static reducer from the frontend
 // const reducer = (state, action)=> {

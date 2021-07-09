@@ -13,14 +13,26 @@ productRouter.get(
     //filter products only for sellers
     const name = req.query.name || "";
     const seller = req.query.seller || "";
+    const category = req.query.category || "";
     const nameFilter = name ? { name: { $regex: name, $options: "i" } } : {};
     const sellerFilter = seller ? { seller } : {};
+    const categoryFilter = category ? { category } : {};
     const products = await Product.find({
       ...nameFilter,
       ...sellerFilter,
+      ...categoryFilter,
     }).populate("seller", "seller.name seller.logo"); //.find({}) returns entire object (or all products (in this case))
     //NOTE: spread operator to deconstruct this and only put the field of seller, not the object
     res.send(products);
+  })
+);
+
+//product categories list api for search screen
+productRouter.get(
+  "/categories",
+  expressAsyncHandler(async (req, res) => {
+    const categories = await Product.find().distinct("category");
+    res.send(categories);
   })
 );
 
@@ -49,6 +61,8 @@ productRouter.get(
     }
   })
 );
+
+
 
 // 'post' - creating resource in backend
 productRouter.post(
