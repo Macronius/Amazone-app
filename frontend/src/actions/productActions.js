@@ -22,16 +22,24 @@ import {
 } from "../constants/productConstants";
 
 export const listProducts =
-  ({ seller = "", name = "", category = "" }) =>
+  ({
+    seller = "",
+    name = "",
+    category = "",
+    order = "",
+    min = 0,
+    max = 0,
+    rating = 0,
+  }) =>
   async (dispatch) => {
-    //NOTE: default value of seller is empty string, but
-
-    dispatch({ type: PRODUCT_LIST_REQUEST }); //NOTE: no payload
+    dispatch({
+      type: PRODUCT_LIST_REQUEST,
+    }); //NOTE: no payload
 
     //fetch data from backend wrapped in try/catch
     try {
       const { data } = await Axios.get(
-        `/api/products?seller=${seller}&name=${name}&category=${category}`
+        `/api/products?seller=${seller}&name=${name}&category=${category}&min=${min}&max=${max}&rating=${rating}&order=${order}`
       ); //QUESTION: where did api/ come from?
       dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data }); //by dispatching action, we change the state of redux and based on that we can update the homescreen and show products
     } catch (error) {
@@ -43,7 +51,7 @@ export const listProducts =
 //NEXT we need to create the product reducer to respond to the actions created here
 
 export const listProductCategories = () => async (dispatch) => {
-  dispatch({ type: PRODUCT_CATEGORY_LIST_REQUEST, });
+  dispatch({ type: PRODUCT_CATEGORY_LIST_REQUEST });
 
   try {
     const { data } = await Axios.get("/api/products/categories");

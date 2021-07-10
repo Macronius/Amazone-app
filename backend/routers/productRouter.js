@@ -13,15 +13,40 @@ productRouter.get(
     //filter products only for sellers
     const name = req.query.name || "";
     const seller = req.query.seller || "";
+    const order = req.query.order || "";
     const category = req.query.category || "";
+    const min =
+      req.query.min && Number(req.query.min) != 0 ? Number(req.query.min) : 0;
+    const max =
+      req.query.max && Number(req.query.max) != 0 ? Number(req.query.max) : 0;
+    const rating =
+      req.query.rating && Number(req.query.rating) != 0
+        ? Number(req.query.rating)
+        : 0;
+
     const nameFilter = name ? { name: { $regex: name, $options: "i" } } : {};
     const sellerFilter = seller ? { seller } : {};
     const categoryFilter = category ? { category } : {};
+    const priceFilter = min && max ? { price: { $gte: min, $lte: max } } : {};
+    const ratingFilter = rating ? { rating: { $gte: rating } } : {};
+    const sortOrder =
+      order === "lowest"
+        ? { price: 1 }
+        : order === "highest"
+        ? { price: -1 }
+        : order === "toprated"
+        ? { rating: -1 }
+        : { _id: -1 };  //NOTE: where 1 and -1 indicate ascending and descending order
+
     const products = await Product.find({
       ...nameFilter,
       ...sellerFilter,
       ...categoryFilter,
-    }).populate("seller", "seller.name seller.logo"); //.find({}) returns entire object (or all products (in this case))
+      ...priceFilter,
+      ...ratingFilter,
+    })
+      .populate("seller", "seller.name seller.logo")
+      .sort(sortOrder); //.find({}) returns entire object (or all products (in this case))
     //NOTE: spread operator to deconstruct this and only put the field of seller, not the object
     res.send(products);
   })
@@ -61,8 +86,6 @@ productRouter.get(
     }
   })
 );
-
-
 
 // 'post' - creating resource in backend
 productRouter.post(
