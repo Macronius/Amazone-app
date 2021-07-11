@@ -36,7 +36,7 @@ productRouter.get(
         ? { price: -1 }
         : order === "toprated"
         ? { rating: -1 }
-        : { _id: -1 };  //NOTE: where 1 and -1 indicate ascending and descending order
+        : { _id: -1 }; //NOTE: where 1 and -1 indicate ascending and descending order
 
     const products = await Product.find({
       ...nameFilter,
@@ -117,7 +117,7 @@ productRouter.put(
   isSellerOrAdmin,
   expressAsyncHandler(async (req, res) => {
     const productId = req.params.id;
-    const product = await Product.findById(productId); //QUESTION: what exactly is 'Product' ?
+    const product = await Product.findById(productId); //QUESTION: what exactly is 'Product'? ANSWER: it comes from productModel (mongoose.model productSchema)
     if (product) {
       product.name = req.body.name;
       product.price = req.body.price;
@@ -155,5 +155,43 @@ productRouter.delete(
   })
 );
 //QUESTION: what exactly is going on here
+
+productRouter.post(
+  "/:id/reviews",
+  isAuth,
+  expressAsyncHandler(async (req, res) => {
+    const productId = req.params.id;
+    const product = await Product.findById(productId);
+    //add new review to product reviews
+    if (product) {
+      if (product.reviews.find((x) => x.name === req.user.name)) {
+        return res
+          .status(400)
+          .send({ message: "You already submitted a review" });
+      }
+      const review = {
+        name: req.user.name,
+        rating: Number(req.body.rating),
+        comment: req.body.comment,
+      };
+      product.reviews.push(review);
+      //update numReview and rating
+      product.numReviews = product.reviews.length;
+      //create and calculate the rating
+      product.rating =
+        product.reviews.reduce((a, c) => c.rating + a, 0) /
+        product.reviews.length;
+      //save the review
+      const updatedProduct = await product.save();
+      //status 201 bc created a new resource
+      res.status(201).send({
+        message: "Product Review Created Successfully",
+        review: updatedProduct.reviews[updatedProduct.reviews.length - 1],
+      });
+    } else {
+      res.status(404).send({ message: "Product not found" });
+    }
+  })
+);
 
 export default productRouter;

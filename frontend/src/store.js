@@ -9,6 +9,7 @@ import {
   productDeleteReducer,
   productDetailsReducer,
   productListReducer,
+  productReviewCreateReducer,
   productUpdateReducer,
 } from "./reducers/productReducers";
 
@@ -56,9 +57,9 @@ const reducer = combineReducers({
   productCreate: productCreateReducer,
   productUpdate: productUpdateReducer,
   productDelete: productDeleteReducer,
+  productCategoryList: productCategoryListReducer,
+  productReviewCreate: productReviewCreateReducer,
   cart: cartReducer,
-  userSignin: userSigninReducer,
-  userRegister: userRegisterReducer,
   orderCreate: orderCreateReducer,
   orderDetails: orderDetailsReducer,
   orderPay: orderPayReducer,
@@ -66,13 +67,14 @@ const reducer = combineReducers({
   orderList: orderListReducer,
   orderDelete: orderDeleteReducer,
   orderDeliver: orderDeliverReducer,
+  userSignin: userSigninReducer,
+  userRegister: userRegisterReducer,
   userDetails: userDetailsReducer,
   userUpdateProfile: userUpdateProfileReducer,
   userUpdate: userUpdateReducer,
   userList: userListReducer,
   userDelete: userDeleteReducer,
   userTopSellersList: userTopSellerListReducer,
-  productCategoryList: productCategoryListReducer,
 });
 //1st store argument: static reducer from the frontend
 // const reducer = (state, action)=> {
