@@ -183,7 +183,7 @@ export default function ProductScreen(props) {
                         <option value="2">2- Fair</option>
                         <option value="3">3- Good</option>
                         <option value="4">4- Very Good</option>
-                        <option value="5">5- Excelent</option>
+                        <option value="5">5- Excellent</option>
                       </select>
                     </div>
                     <div>
