@@ -31,6 +31,9 @@ app.use("/api/orders", orderRouter); //responder is orderRouter
 app.get("/api/config/paypal", (req, res) => {
   res.send(process.env.PAYPAL_CLIENT_ID || "sb");
 });
+app.get("/api/config/google", (req, res)=> {
+  res.send(process.env.GOOGLE_API_KEY || "");
+});
 
 const __dirname = path.resolve(); //returns current folder, saved as __dirname, then used to concatenate the current folder to the upload folder
 app.use("/uploads", express.static(path.join(__dirname, "/uploads"))); //add a new line to show the images that upload to the uploads folder

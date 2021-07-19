@@ -12,6 +12,7 @@ import SellerRoute from "./components/SellerRoute";
 // import { userDeleteReducer } from "./reducers/userReducers";
 import CartScreen from "./screens/CartScreen";
 import HomeScreen from "./screens/HomeScreen";
+import MapScreen from "./screens/MapScreen";
 import OrderHistoryScreen from "./screens/OrderHistoryScreen";
 import OrderListScreen from "./screens/OrderListScreen";
 import OrderScreen from "./screens/OrderScreen";
@@ -224,6 +225,10 @@ function App() {
           <PrivateRoute
             path="/profile"
             component={ProfileScreen}
+          ></PrivateRoute>
+          <PrivateRoute
+            path="/map"
+            component={MapScreen}
           ></PrivateRoute>
           <AdminRoute
             path="/productlist"

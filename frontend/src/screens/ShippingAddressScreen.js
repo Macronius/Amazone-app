@@ -4,29 +4,72 @@ import { saveShippingAddress } from "../actions/cartActions";
 import CheckoutSteps from "../components/CheckoutSteps";
 
 export default function ShippingAddressScreen(props) {
+  const userSignin = useSelector((state) => state.userSignin);
 
-  const userSignin = useSelector( (state)=> state.userSignin );
-  const {userInfo} = userSignin;
-  if(!userInfo){
-      props.history.push('/signin');
+  const { userInfo } = userSignin;
+  const cart = useSelector((state) => state.cart);
+  const { shippingAddress } = cart;
+  const [lat, setLat] = useState(shippingAddress.lat);
+  const [lng, setLng] = useState(shippingAddress.lng);
+  const userAddressMap = useSelector((state) => state.userAddressMap);
+  const { address: addressMap } = userAddressMap;
+
+  if (!userInfo) {
+    props.history.push("/signin");
   }
-
-  const cart = useSelector( (state)=> state.cart );
-  const {shippingAddress} = cart;
-
   const [fullName, setFullName] = useState(shippingAddress.fullName);
   const [address, setAddress] = useState(shippingAddress.address);
   const [city, setCity] = useState(shippingAddress.city);
   const [postalCode, setPostalCode] = useState(shippingAddress.postalCode);
   const [country, setCountry] = useState(shippingAddress.country);
-
   const dispatch = useDispatch();
-
   const submitHandler = (e) => {
     e.preventDefault();
+    //get lat and long from the address; must define two hooks for this
+    const newLat = addressMap ? addressMap.lat : lat;
+    const newLng = addressMap ? addressMap.lng : lng;
+    if (addressMap) {
+      setLat(addressMap.lat);
+      setLng(addressMap.lng);
+    }
+    let moveOn = true; //note: address on map is not mandatory
+    if (!newLat || !newLng) {
+      moveOn = window.confirm(
+        "You did not set your location on map.  Continue?"
+      );
+    }
+    //now check if should move on based on result from above
     //TODO: dispatch save shipping address action
-    dispatch(saveShippingAddress({fullName, address, city, postalCode, country}));    //define saveShippingAddress in cartAction.js
-    props.history.push('/payment');     //to redirect user to payment screen
+    if (moveOn) {
+      dispatch(
+        saveShippingAddress({
+          fullName,
+          address,
+          city,
+          postalCode,
+          country,
+          lat: newLat,
+          lng: newLng,
+        })
+      ); //define saveShippingAddress in cartAction.js
+      props.history.push("/payment"); //to redirect user to payment screen
+    }
+  }; //NOTE: this is the change from the submitHandler
+
+  const chooseOnMap = () => {
+    dispatch(
+      saveShippingAddress({
+        fullName,
+        address,
+        city,
+        postalCode,
+        country,
+        lat,
+        lng,
+      })
+    );  //NOTE: here lat and lng come from the state
+    //redirect user to the map screen
+    props.history.push('/map');
   };
 
   return (
@@ -41,11 +84,11 @@ export default function ShippingAddressScreen(props) {
           <input
             type="text"
             id="fullName"
-            placeholder="Full Name"
+            placeholder="Enter Full Name"
             value={fullName}
             onChange={(e) => setFullName(e.target.value)}
             required
-          />
+          ></input>
         </div>
         <div>
           <label htmlFor="address">Address</label>
@@ -56,7 +99,7 @@ export default function ShippingAddressScreen(props) {
             value={address}
             onChange={(e) => setAddress(e.target.value)}
             required
-          />
+          ></input>
         </div>
         <div>
           <label htmlFor="city">City</label>
@@ -67,7 +110,7 @@ export default function ShippingAddressScreen(props) {
             value={city}
             onChange={(e) => setCity(e.target.value)}
             required
-          />
+          ></input>
         </div>
         <div>
           <label htmlFor="postalCode">Postal Code</label>
@@ -78,7 +121,7 @@ export default function ShippingAddressScreen(props) {
             value={postalCode}
             onChange={(e) => setPostalCode(e.target.value)}
             required
-          />
+          ></input>
         </div>
         <div>
           <label htmlFor="country">Country</label>
@@ -89,7 +132,14 @@ export default function ShippingAddressScreen(props) {
             value={country}
             onChange={(e) => setCountry(e.target.value)}
             required
-          />
+          ></input>
+        </div>
+        {/* button to direct user to MapScreen */}
+        <div>
+          <label htmlFor="chooseOnMap">Location</label>
+          <button type="button" id="chooseOnMap" onClick={chooseOnMap}>
+            Choose On Map
+          </button>
         </div>
         <div>
           <label />

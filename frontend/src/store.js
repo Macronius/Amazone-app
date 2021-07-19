@@ -22,6 +22,7 @@ import {
   userDeleteReducer,
   userUpdateReducer,
   userTopSellerListReducer,
+  userAddressMapReducer,
 } from "./reducers/userReducers";
 
 import {
@@ -75,6 +76,7 @@ const reducer = combineReducers({
   userList: userListReducer,
   userDelete: userDeleteReducer,
   userTopSellersList: userTopSellerListReducer,
+  userAddressMap: userAddressMapReducer,
 });
 //1st store argument: static reducer from the frontend
 // const reducer = (state, action)=> {

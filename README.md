@@ -362,42 +362,48 @@ follow-along with Coding with Basir - mainly to learn how version control works
     4. show products on the screen
 
 43. Delete Order
+
     1. create orderRouter.delete() api
     2. create delete order action and reducer
     3. add order delete action to order list
 
 44. Deliver Order(process order details individually as an admin)
+
     1. create constants, actions and reducers for deliver order
     2. add order deliver action to order details screen
 
 45. Publish to Heroku
+
     1. Create git repository
     2. Create heroku account
     3. install Heroku CLI
     4. heroku login
     5. heroku apps:create <yourname>amazone
     6. Edit package.json for build script
-    10. Create Profile
-    12. Create mongodb atlas database
-    19. Set database connection in heroku env variables
-    20. Commit and push
+    7. Create Profile
+    8. Create mongodb atlas database
+    9. Set database connection in heroku env variables
+    10. Commit and push
 
 46. List Users
+
     1. build api for list users
     2. Create UserListScreen
     3. create order details constants, actions and reducers
 
 47. Delete Users
+
     1. build api for delete users
     2. create order details constants, actions and reducer
     3. Use action in UserListScreen
 
 48. Edit User
+
     1. build api for update users
     2. create edit screen UI
 
-
 49. Implement Seller View
+
     1. add seller menu
     2. create seller route
     3. define a 'seller' userModel
@@ -407,18 +413,22 @@ follow-along with Coding with Basir - mainly to learn how version control works
     7. add Seller to ProductListScreen and DetailsScreen
 
 50. Create Seller Page
+
     1. create seller page
     2. create seller carousel
 
 51. Add Top Seller Carousel
+
     1. install react carousel
     2. implement actions and reducers for top sellers
     3. use react carousel with data in Home Screen
 
 52. Force Order Items From One Seller
+
     1. update addToCart action to buy from one seller at a time per order
 
 53. Create Search Box and Search Screen
+
     1. create search bar in Header.js
     2. add style
     3. handle submit form
@@ -426,15 +436,29 @@ follow-along with Coding with Basir - mainly to learn how version control works
     5. update product list api for search by name
 
 54. Add Advanced Search Filter
+
     1. filter by category
     2. filter by price
     3. filter by average rating
 
 55. Complete Advanced Search
+
     1. filter by price
     2. filter by rating
     3. sort by price, rating, ...
 
 56. Rate and Review Products
+
     1. rate products
     2. create actions and reducers
+
+57. Choose Address On Google Map
+    1. create google map credentials
+    2. update .env file with Google Api Key
+    3. create api to send google api to frontend
+    4. create map screen
+    5. fetch google api
+    6. getUserLocation
+    7. install @react-google-maps/api
+    8. use it in shipping screen
+    9. apply map to the checkout screen
