@@ -66,8 +66,21 @@ productRouter.get(
   "/seed",
   expressAsyncHandler(async (req, res) => {
     //await.Product.remove({});
-    const createdProducts = await Product.insertMany(data.products);
-    res.send({ createdProducts });
+    const seller = await User.findOne({isSeller: true}); //get first user in user collection that isSeller is true
+    if(seller){
+      //Create new products array; convert all products and add a new field 'seller' and set seller id with first user in db where isSeller is true
+      const products = data.products.map( (product)=> ({
+        ...product,
+        seller: seller._id,
+      }));
+      //use insertMany to insert products inside database
+      const createdProducts = await Product.insertMany(products);
+      res.send({createdProducts});
+    }else{
+      res
+      .status(500)
+      .send({message: 'No seller found. first run /api/users/seed'});
+    }
   })
 );
 
