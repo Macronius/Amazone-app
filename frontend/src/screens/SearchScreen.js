@@ -18,10 +18,11 @@ export default function SearchScreen(props) {
     max = 0,
     rating = 0,
     order = "newest",
+    pageNumber = 1,
   } = useParams();
 
   const productList = useSelector((state) => state.productList);
-  const { loading, products, error } = productList;
+  const { loading, products, error, page, pages } = productList;
 
   const productCategoryList = useSelector((state) => state.productCategoryList);
   const {
@@ -33,6 +34,7 @@ export default function SearchScreen(props) {
   useEffect(() => {
     dispatch(
       listProducts({
+        pageNumber,
         name: name !== "all" ? name : "",
         category: category !== "all" ? category : "",
         min,
@@ -41,16 +43,17 @@ export default function SearchScreen(props) {
         order,
       })
     );
-  }, [category, dispatch, name, min, max, rating, order]);
+  }, [category, dispatch, name, min, max, rating, order, pageNumber]);
 
   const getFilterUrl = (filter) => {
+    const filterPage = filter.page || pageNumber;
     const filterCategory = filter.category || category;
     const filterName = filter.name || name;
     const filterRating = filter.rating || rating;
     const sortOrder = filter.order || order;
     const filterMin = filter.min ? filter.min : filter.min === 0 ? 0 : min;
     const filterMax = filter.max ? filter.max : filter.max === 0 ? 0 : max;
-    return `/search/category/${filterCategory}/name/${filterName}/min/${filterMin}/max/${filterMax}/rating/${filterRating}/order/${sortOrder}`; //generate url path
+    return `/search/category/${filterCategory}/name/${filterName}/min/${filterMin}/max/${filterMax}/rating/${filterRating}/order/${sortOrder}/pageNumber/${filterPage}`; //generate url path
   }; //QUESTION: how exactly does this work?
   //QUESTION: if 'category' and 'name' come from useParams(), then how exactly is getFilterUrl connected to those 'params' ?
 
@@ -158,6 +161,13 @@ export default function SearchScreen(props) {
               <div className="row center">
                 {products.map((product) => (
                   <Product key={product._id} product={product}></Product>
+                ))}
+              </div>
+              <div className="row center pagination">
+                {[...Array(pages).keys()].map((x) => (
+                  <Link className={x + 1 === page ? 'active' : ''} key={x + 1} to={getFilterUrl({ page: x + 1 })}>
+                    {x + 1}
+                  </Link>
                 ))}
               </div>
             </>

@@ -26,6 +26,7 @@ import {
 
 export const listProducts =
   ({
+    pageNumber = '',
     seller = "",
     name = "",
     category = "",
@@ -42,7 +43,7 @@ export const listProducts =
     //fetch data from backend wrapped in try/catch
     try {
       const { data } = await Axios.get(
-        `/api/products?seller=${seller}&name=${name}&category=${category}&min=${min}&max=${max}&rating=${rating}&order=${order}`
+        `/api/products?pageNumber=${pageNumber}&seller=${seller}&name=${name}&category=${category}&min=${min}&max=${max}&rating=${rating}&order=${order}`
       ); //QUESTION: where did api/ come from?
       dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data }); //by dispatching action, we change the state of redux and based on that we can update the homescreen and show products
     } catch (error) {

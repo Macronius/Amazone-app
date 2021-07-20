@@ -10,6 +10,9 @@ const productRouter = express.Router();
 productRouter.get(
   "/",
   expressAsyncHandler(async (req, res) => {
+    const pageSize = 3;
+    //get page number from query string of api
+    const page = Number(req.query.pageNumber) || 1;  //see productActions.js line
     //filter products only for sellers
     const name = req.query.name || "";
     const seller = req.query.seller || "";
@@ -38,6 +41,13 @@ productRouter.get(
         ? { rating: -1 }
         : { _id: -1 }; //NOTE: where 1 and -1 indicate ascending and descending order
 
+    const count = await Product.count({
+      ...nameFilter,
+      ...sellerFilter,
+      ...categoryFilter,
+      ...priceFilter,
+      ...ratingFilter,
+    });
     const products = await Product.find({
       ...nameFilter,
       ...sellerFilter,
@@ -46,9 +56,12 @@ productRouter.get(
       ...ratingFilter,
     })
       .populate("seller", "seller.name seller.logo")
-      .sort(sortOrder); //.find({}) returns entire object (or all products (in this case))
+      .sort(sortOrder)
+      .skip(pageSize*(page - 1))
+      .limit(pageSize)
+      ; //.find({}) returns entire object (or all products (in this case))
     //NOTE: spread operator to deconstruct this and only put the field of seller, not the object
-    res.send(products);
+    res.send({products, page, pages: Math.ceil(count / pageSize)});
   })
 );
 
